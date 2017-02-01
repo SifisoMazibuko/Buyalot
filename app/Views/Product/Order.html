@@ -1,0 +1,66 @@
+﻿<form class="form-horizontal" novalidate role="form">
+    <fieldset>
+        <div class="row">
+            <div class="col-sm-3 col-md-3">
+                <div class="input-group">
+                    <input type="search" class="form-control" placeholder="Search for..." ng-model="searchFor">
+                    <div class="input-group-btn">
+                        <button class="btn btn-default" type="button" ng-click="search()">
+                            <span class="glyphicon glyphicon-search"></span>
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <br/>
+        <div class="row top-buffer table-responsive">
+            <table class="table table-bordered table-striped ">
+                <thead>
+                    <tr>
+                        <th>
+                            <a ng-click="sort('orderID')">Order ID</a>
+                            <i ng-class="{'glyphicon glyphicon-chevron-up':sortKeyOrder.order=='ASC' && sortKeyOrder.key=='orderID'}"></i>
+                            <i ng-class="{'glyphicon glyphicon-chevron-down':sortKeyOrder.order=='DESC' && sortKeyOrder.key=='orderID'}"></i>
+                        </th>
+                        <th>
+                            <a ng-click="sort('orderDate')">Order Date</a>
+                            <i ng-class="{'glyphicon glyphicon-chevron-up':sortKeyOrder.order=='ASC' && sortKeyOrder.key=='orderDate'}"></i>
+                            <i ng-class="{'glyphicon glyphicon-chevron-down':sortKeyOrder.order=='DESC' && sortKeyOrder.key=='orderDate'}"></i>
+                        </th>
+                        <th>
+                            <a ng-click="sort('shippingDate')">Shipping Date</a>
+                            <i ng-class="{'glyphicon glyphicon-chevron-up':sortKeyOrder.order=='ASC' && sortKeyOrder.key=='shippingDate'}"></i>
+                            <i ng-class="{'glyphicon glyphicon-chevron-down':sortKeyOrder.order=='DESC' && sortKeyOrder.key=='shippingDate'}"></i>
+                        </th>
+                        <th>
+                            <a ng-click="sort('shippingAddress')">Shipping Address</a>
+                            <i ng-class="{'glyphicon glyphicon-chevron-up':sortKeyOrder.order=='ASC' && sortKeyOrder.key=='shippingAddress'}"></i>
+                            <i ng-class="{'glyphicon glyphicon-chevron-down':sortKeyOrder.order=='DESC' && sortKeyOrder.key=='shippingAddress'}"></i>
+                        </th>
+                        <th>
+                            <a ng-click="sort('status')">Status</a>
+                            <i ng-class="{'glyphicon glyphicon-chevron-up':sortKeyOrder.order=='ASC' && sortKeyOrder.key=='status'}"></i>
+                            <i ng-class="{'glyphicon glyphicon-chevron-down':sortKeyOrder.order=='DESC' && sortKeyOrder.key=='status'}"></i>
+                        </th>
+                        <th>
+                            <a ng-click="sort('totalPrice')">Total Price</a>
+                            <i ng-class="{'glyphicon glyphicon-chevron-up':sortKeyOrder.order=='ASC' && sortKeyOrder.key=='totalPrice'}"></i>
+                            <i ng-class="{'glyphicon glyphicon-chevron-down':sortKeyOrder.order=='DESC' && sortKeyOrder.key=='totalPrice'}"></i>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr data-ng-repeat="order in orderDetails">
+                        <td>{{order.customerID}}</td>
+                        <td>{{order.orderDate}}</td>
+                        <td>{{order.shippingDate}}</td>
+                        <td>{{order.shippingAddress}}</td>
+                        <td>{{order.status}}</td>
+                        <td>{{order.totalPrice}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </fieldset>
+</form>
