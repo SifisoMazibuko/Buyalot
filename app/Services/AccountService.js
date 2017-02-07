@@ -7,29 +7,51 @@
                 Password: password
             });
         };
-        var register = function (firstName, lastName, phone, email, password, confirmPassword, state) {
-            return $http.post("Account/Register", {
+        var register = function (firstName, lastName, phone, email, password, confirmPassword, address, city, postalCode, state) {
+            return $http.post("/Account/Register", {
                 FirstName: firstName,
                 LastName: lastName,
                 Phone: phone,
                 Email: email,
                 Password: password,
                 ConfirmPassword: confirmPassword,
+                Address: address,
+                City: city,
+                PostalCode: postalCode,
                 State: state
            });
 
         }
         var adminLogin = function (email, adminName, password){
-            return $http.post("Account/AdminLogin",
+            return $http.post("/Account/AdminLogin",
                 {
-                    Email: email, AdminName: adminName, Password: password
+                    Email: email,
+                    AdminName: adminName,
+                    Password: password
                 });
+        }
+
+        var addProduct = function (productName, productDescription, price, vendor, quantityInStock, productImage) {
+            return $http.post("/Product/AddProduct", {
+                ProductName: productName,
+                ProductDescription: productDescription,
+                Price: price,
+                Vendor: vendor,
+                QuantityInStock: quantityInStock,
+                ProductImage: productImage
+            });
+        }
+
+        var profileGet = function (customerId) {
+            return $http.get("/Account/GetProfile/" + customerId);
         }
 
         return {
             login: login,
             register: register,
-            adminLogin: adminLogin
+            addProduct: addProduct,
+            adminLogin: adminLogin,
+            GetProfile: profileGet
         }
     }
 ]);

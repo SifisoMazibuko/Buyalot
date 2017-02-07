@@ -21,14 +21,16 @@
             <div class="col-sm-9">
                 <input type="password" name="password" ng-model="registerModel.password" class="form-control" ng-required="true" />
                 <p ng-show="registerForm.password.$invalid && !registerForm.password.$pristine" class="help-block">Password required!</p>
+                <p ng-show="registerForm.password.$invalid" class="help-block">Password must be 6 Characters long!</p>
             </div>
         </div>
 
         <div class="form-group" show-errors>
             <label for="ConfirmPassword" class="col-sm-3 control-label">Confirm Password:</label>
             <div class="col-sm-9">
-                <input name="confirmPassword" type="password" ng-model="registerModel.ConfirmPassword" class="form-control" ng-required="true" data-match="registerForm.password" />
+                <input name="confirmPassword" type="password" ng-model="registerModel.confirmPassword" class="form-control" ng-required="true" data-match="registerForm.password" />
                <p ng-show="registerForm.confirmPassword.$invalid && !registerForm.confirmPassword.$pristine" class="help-block">Password don't match!</p>
+                <p ng-show="registerForm.confirmPassword.$invalid" class="help-block">Password must be 6 Characters long!</p>
             </div>
         </div>
     </fieldset>
@@ -36,9 +38,9 @@
     <fieldset>
         <legend class="container">Contact Details</legend>
         <div class="form-group" show-errors>
-            <label for="Phone" class="col-sm-3 control-label">Phone:</label>
+            <label for="phone" class="col-sm-3 control-label">Phone:</label>
             <div class="col-sm-9">
-                <input name="phone" type="text" ng-model="registerModel.Phone" class="form-control" ng-required="true" ng-pattern="/[0-9]/" ng-minlength="10" ng-maxlength="10" />
+                <input name="phone" type="text" ng-model="registerModel.phone" class="form-control" ng-required="true" ng-pattern="/[0-9]/" ng-minlength="10" ng-maxlength="10" />
                 <p ng-show="registerForm.phone.$invalid && !registerForm.phone.$pristine" class="help-block">Phone number is required!</p>
             </div>
         </div>
@@ -74,6 +76,7 @@
             </div>
         </div>
     </fieldset>
+
 
 
     <div class="col-sm-offset-3 col-sm-9">

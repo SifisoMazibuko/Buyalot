@@ -1,6 +1,6 @@
 AngularApp.controller('AdminController',
-['$scope', '$locationProvider', '$window', 'AccountService',
-    function($scope, $locationProvider, $window, AccountService){
+['$scope', '$location', '$window', 'AccountService',
+    function ($scope, $location , $window, AccountService) {
         $scope.adminModel = {
             adminID: '',
             adminName: '',
@@ -9,18 +9,19 @@ AngularApp.controller('AdminController',
         };
         $scope.submitForm = function(){
             
-             $scope.$broadcast('show-errors-check-validity');
+            $scope.$broadcast('show-errors-check-validity');
+
              if($scope.adminForm.$invalid)
                 return;
                  
              if ($scope.adminForm.$valid) {
 
-                 AccountService.admin($scope.adminModel.email,
+                 AccountService.adminLogin($scope.adminModel.email,
                                         $scope.adminModel.adminName,
                                         $scope.adminModel.password).then(
 
                      function (result) {
-                         $location.path('/home');
+                         $location.path('/addProduct');
                      },
 
                      function (error) {
@@ -32,7 +33,7 @@ AngularApp.controller('AdminController',
 
         }
         $scope.adminForm = function () {
-            $location.path('/adminLogin');
+            $location.path('/AdminLogin');
         };
 
         $scope.successMessage = "Successfully logged In!";

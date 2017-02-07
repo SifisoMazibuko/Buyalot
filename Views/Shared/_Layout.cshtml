@@ -55,7 +55,7 @@
 
 
                 <ul class="nav navbar-nav navbar-right">
-                    @*<a href="/#/">Welcome {{loginModel.firstName}}</a>*@
+                    <li ng-show><a href="/#/">Welcome {{loginModel.email}}</a></li>
                     <li><a href="/#/login">Login</a></li>
                     <li><a href="/#/adminLogin">Admin Login</a></li>
                     <li><a href="/#/register">Register</a></li>
@@ -93,6 +93,22 @@
             </li>
         </ul>
     </div>
+
+
+    <div class="navbar-collapse collapse" collapse="navbarProperties.isCollapsed">
+        <div class="nav navbar-nav">
+            <select name="CategoryList" ng-model="productCategoryModel.CategoryList" class="form-control" ng-required="true">
+                <option value="">--Browse Category--</option>
+                <option ng-repeat="CategoryList in CategoryLists" value="{{CategoryList.value}}">
+                    {{CategoryList.categoryName}}
+                </option>
+            </select>
+    </div>
+    </div>
+
+
+
+
     @*<div ng-view></div>*@
     <div class="container mainContent">
         <br />
@@ -112,8 +128,8 @@
     </div>
 
     @*@Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/jqueryval")
-    @Scripts.Render("~/bundles/bootstrap")
-    @Scripts.Render("~/bundles/Site")*@
+        @Scripts.Render("~/bundles/jqueryval")
+        @Scripts.Render("~/bundles/bootstrap")
+        @Scripts.Render("~/bundles/Site")*@
 </body>
 </html>

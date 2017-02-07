@@ -199,11 +199,17 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="DbContext\DataContext.cs" />
     <Compile Include="DbContext\RegisterInitializer.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201702061322503_InitialCreate.cs" />
+    <Compile Include="Migrations\201702061322503_InitialCreate.Designer.cs">
+      <DependentUpon>201702061322503_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AddressModel.cs" />
     <Compile Include="Models\AdminModel.cs" />
@@ -216,9 +222,9 @@
     <Compile Include="Models\PaymentModel.cs" />
     <Compile Include="Models\ProductModel.cs" />
     <Compile Include="Models\ProductCategoryModel.cs" />
-    <Compile Include="Models\RegisterModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Provider\AdminException.cs" />
+    <Compile Include="Provider\Cipher.cs" />
     <Compile Include="Provider\LoginException.cs" />
     <Compile Include="Provider\RegisterException.cs" />
     <Compile Include="Startup.cs" />
@@ -228,7 +234,10 @@
     <Content Include="app\Controllers\AdminController.js" />
     <Content Include="app\Controllers\HomeController.js" />
     <Content Include="app\Controllers\LoginController.js" />
+    <Content Include="app\Controllers\LogoutController.js" />
+    <Content Include="app\Controllers\PaymentController.js" />
     <Content Include="app\Controllers\ProductController.js" />
+    <Content Include="app\Controllers\ProfileController.js" />
     <Content Include="app\Controllers\RegisterController.js" />
     <Content Include="app\Directives\Validation.js" />
     <Content Include="app\Services\AccountService.js" />
@@ -242,6 +251,7 @@
     <Content Include="app\Views\Home\Home.html" />
     <Content Include="app\Views\Product\AddProduct.html" />
     <Content Include="app\Views\Product\Order.html" />
+    <Content Include="app\Views\Product\ViewProducts.html" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -294,6 +304,7 @@
     <Content Include="Scripts\angular.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="app\Views\Product\ViewProducts.cshtml" />
     <None Include="Scripts\jquery-1.9.1.intellisense.js" />
     <Content Include="Scripts\jquery-1.9.1.js" />
     <Content Include="Scripts\jquery-1.9.1.min.js" />
@@ -339,11 +350,13 @@
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Service References\Application Insights\ConnectedService.json" />
+    <Content Include="Views\Account\ViewProducts.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Entities\" />
     <Folder Include="Scripts\i18n\" />
+    <Folder Include="Views\Product\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -367,6 +380,11 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201702061322503_InitialCreate.resx">
+      <DependentUpon>201702061322503_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

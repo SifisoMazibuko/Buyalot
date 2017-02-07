@@ -1,0 +1,59 @@
+﻿@model IEnumerable<Buyalot.Models.ProductModel>
+@{
+    ViewBag.Title = "ViewProducts";
+}
+
+<h2>ViewProducts</h2>
+@using (Html.BeginForm("ViewProducts", "Account", new { ReturnUrl = Model.productName }, FormMethod.Get, new { @class = "form-horizontal", role = "form" }))
+{
+    <div class="container">
+        <div class="row">
+            @foreach (var product in Model)
+            {
+
+
+                <div style="width:200px; height:225px; text-align:left; display:inline-block; margin:0 10px 10px 0;">
+                    @{
+                var base64 = Convert.ToBase64String(product.productImage);
+                var prodImage = string.Format("data:image/png;base64,{0}", base64);
+
+                var name1 = product.vendor + " " + product.productName;
+                var price1 = product.price.ToString();
+                var quantity1 = product.quantityInStock;
+                var check1 = "";
+
+
+                if (quantity1 > 0)
+                {
+                    check1 = "Available";
+                }
+                else
+                {
+                    check1 = "Out Of Stock";
+
+                }
+                    }
+                    <img src="@prodImage" style="max-height:200px;max-width:200px;" />
+                    <p>@name1</p>
+                    <p>@price1</p>
+                    <p>@check1</p>
+                    @*<input type="button" value="Add To Cart" class="btn btn-info navbar-left" />*@
+
+                </div>
+
+
+            }
+            <br />
+            <br />
+            </div>
+        </div>
+  }
+
+
+
+
+
+
+
+       
+
