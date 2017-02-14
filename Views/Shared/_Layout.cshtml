@@ -33,7 +33,7 @@
         appInsights.trackPageView();
     </script>
 </head>
-<body ng-app="HomeController">
+<body>
     <div class="navbar navbar-default navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
@@ -75,7 +75,7 @@
     
 
     <hr />
-    <div class="container">
+    <div class="navbar-collapse collapse" collapse="navbarProperties.isCollapsed">
         <ul class="nav navbar-left col-lg-2">
             <li class="dropdown">
                 <div class="dropdown-toggle" data-toggle="dropdown">Browse By Category<b class="caret"></b></div>
@@ -89,14 +89,6 @@
             </li>
         </ul>
 
-
-        @using (Html.BeginForm())
-        {
-            <Div class="nav form-inline">
-                <input type="search" class="form-control" name="SearchString" style="max-width:800px;" id="SearchString" onkeyup="myFunction()" placeholder="search for product" />
-                <input type="submit" value="Filter" />
-            </Div>
-        }
     </div>
 
 
@@ -128,11 +120,9 @@
     </div>
     </div>*@
 
-    @Html.Partial("Index")
 
 
-    @*<div ng-view></div>*@
-    <div class="container mainContent">
+    <div class="container mainContent" ng-app="AngularApp">
         <br />
         <div ng-view>
         </div>

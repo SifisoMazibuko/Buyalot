@@ -4,3 +4,12 @@
     ViewBag.Title = "Home Page";
 }
 
+
+@using (Html.BeginForm())
+{
+    <Div class="nav form-inline">
+        <input type="search" class="form-control" name="SearchString" style="max-width:800px;" id="SearchString" onkeyup="myFunction()" placeholder="search for product" />
+        <input type="submit" value="Filter" />
+    </Div>
+}
+ 
