@@ -28,6 +28,14 @@ AngularApp.config(
              templateUrl: "app/Views/Product/AddProduct.html",
              controller: "ProductController"
          })
+          .when("/viewProduct", {
+              templateUrl: "app/Views/Product/ViewProducts.html",
+              controller: "ProductController"
+          })
+         .when("/payment", {
+             templateUrl: "app/Views/Account/Payment.html",
+             controller: "ProductController"
+         })
           .when("/profile", {
              templateUrl: "app/Views/Account/Profile.html",
              controller: "RegisterController"

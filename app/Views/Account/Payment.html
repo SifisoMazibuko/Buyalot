@@ -1,16 +1,18 @@
-﻿<form class="form-horizontal" name="registerForm" novalidate role="form">
+﻿<form class="form-horizontal" name="paymentForm" novalidate role="form">
     <fieldset>
         <legend class="container">Payment </legend>
         <div class="form-group">
             <label for="CardHolderName" class="col-sm-3 control-label">Card Holder Name:</label>
             <div class="col-sm-9">
-                <input name="CardHolderName" type="text" ng-model="registerModel.CardHolderName" class="form-control" />
+                <input name="CardHolderName" type="text" ng-model="paymentModel.CardHolderName" class="form-control" />
+                <p ng-show="paymentForm.CardHolderName.$invalid && !paymentForm.CardHolderName.$pristine" class="help-block">Name is required!</p>
             </div>
         </div>
         <div class="form-group">
             <label for="cardNumber" class="col-sm-3 control-label">Card Number:</label>
             <div class="col-sm-9">
-                <input name="cardNumber" type="text" ng-model="registerModel.cardNumber" class="form-control" />
+                <input name="cardNumber" type="text" ng-model="paymentModel.cardNumber" class="form-control" />
+                <p ng-show="paymentForm.cardNumber.$invalid && !paymentForm.cardNumber.$pristine" class="help-block">Card Number is required!</p>
             </div>
         </div>
         <div class="form-group">
@@ -29,7 +31,7 @@
         <div class="form-group">
             <label for="cvv" class="col-sm-3 control-label">CVV :</label>
             <div class="col-sm-9">
-                <input name="cvv" type="text" ng-model="registerModel.cvv" class="form-control" />
+                <input name="cvv" type="text" ng-model="paymentModel.cvv" class="form-control" />
             </div>
         </div>
         <div class="col-sm-offset-3 col-sm-9">

@@ -13,6 +13,7 @@ using Buyalot.DbConnection;
 using System.Net;
 using Buyalot.Provider;
 using System.Web.Security;
+using AftaScool.BL.Util;
 
 namespace Buyalot.Controllers
 {
@@ -22,7 +23,7 @@ namespace Buyalot.Controllers
         private DataContext Context { get; set; }
         private bool _DisposeContext = false;
         
-
+       
         public AccountController()
         {
             Context = new DataContext();
@@ -38,30 +39,68 @@ namespace Buyalot.Controllers
             base.Dispose(disposing);
 
         }
+        
 
-        // POST: /Account/Login
         [HttpPost]
         [AllowAnonymous]
-        [ValidateAntiForgeryToken]
         public ActionResult Login(CustomerModel model)
         {
-            if (!ModelState.IsValid)
-            {
-                return View(model);
-            }
 
-            return View(model);
+            var errors = ModelState
+                    .Where(x => x.Value.Errors.Count > 0)
+                    .Select(x => new { x.Key, x.Value.Errors })
+                     .ToArray();
+                        
+            try
+            {
+                var identity = new ClaimsIdentity(new[] { new Claim(ClaimTypes.Name, model.email), }, 
+                    DefaultAuthenticationTypes.ApplicationCookie, ClaimTypes.Name, ClaimTypes.Role);
+
+                identity.AddClaim(new Claim(ClaimTypes.Role, "customer"));
+                identity.AddClaim(new Claim(ClaimTypes.GivenName, "Person"));
+                identity.AddClaim(new Claim(ClaimTypes.Sid, model.customerID.ToString()));
+
+                if (model.isValid(model.email, Cipher.Encrypt(model.password)))
+                {
+                    FormsAuthentication.SetAuthCookie(model.email, false);
+                    Session["cusName"] = model.email;
+                    return RedirectToAction("Index", "Home");
+                }
+                else
+                    return new HttpStatusCodeResult(HttpStatusCode.InternalServerError, "Incorrect details");
+
+            }
+            catch (LoginException e)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.InternalServerError, e.Message); ;
+            } 
+           
         }
-        
+
+        //GET: /Account/Register
+        [HttpGet]
+        public ActionResult Register()
+        {
+            return View();
+        }
+
         [HttpPost]
         [AllowAnonymous]
-        public ActionResult Register(CustomerModel model)
+        public ActionResult Register(CustomerModel model, AddressModel addressModel)
         {
 
+            
+            var errors = ModelState
+                    .Where(x => x.Value.Errors.Count > 0)
+                    .Select(x => new { x.Key, x.Value.Errors })
+                     .ToArray();
+
+            var user1 = new CustomerModel();
+            var values = new AddressModel();
             try
             {
                 if (!ModelState.IsValid)
-                    return new HttpStatusCodeResult(HttpStatusCode.InternalServerError, "Error details");
+                    return new HttpStatusCodeResult(HttpStatusCode.InternalServerError, "Internal Error details");
 
                 if (ModelState.IsValid)
                 {
@@ -69,22 +108,30 @@ namespace Buyalot.Controllers
                     {
                         firstName = model.firstName,
                         lastName = model.lastName,
-                        password = model.password,
-                        confirmPassword = model.confirmPassword,
                         phone = model.phone,
                         email = model.email,
+                        password = Cipher.Encrypt(model.password),
+                        confirmPassword = Cipher.Encrypt(model.confirmPassword),
                         state = model.state
                     };
-                    Context.CustomerModelSet.Add(user);
-                    Context.SaveChanges();
-                    //if (user.ToString() != null)
-                    //{
-                    //    return RedirectToAction("Index", "Home");
-                    //}
+                    
+                    var addr = new AddressModel
+                    {
+                        address = addressModel.address,
+                        city = addressModel.city,
+                        postalCode = addressModel.postalCode
+                    };
 
+                    user1 = user;
+                    values = addr;
                     FormsAuthentication.SetAuthCookie(model.email, false);
 
-                    Context.SaveChangesAsync();
+                    Context.CustomerModelSet.Add(user1);
+                    Context.AddressModelSet.Add(values);
+                    Context.SaveChanges();
+
+                    return RedirectToAction("Index","Home");
+                    
                 }
 
             }
@@ -92,9 +139,128 @@ namespace Buyalot.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.InternalServerError, e.Message);
             }
-           
-            // If we got this far, something failed, redisplay form
-            return View(model);
+            ModelState.Clear();
+            return View(user1);
+        }
+
+
+        [HttpPost]
+        [AllowAnonymous]
+        public ActionResult AdminLogin(AdminModel model)
+        {
+
+            var errors = ModelState
+                    .Where(x => x.Value.Errors.Count > 0)
+                    .Select(x => new { x.Key, x.Value.Errors })
+                     .ToArray();
+
+            try
+            {
+                if (model.isValid(model.adminName, model.email, model.password))
+                {
+                    FormsAuthentication.SetAuthCookie(model.email, false);
+                    return RedirectToAction("Index", "Home");
+                }
+                else
+                    return new HttpStatusCodeResult(HttpStatusCode.InternalServerError, "Incorrect details");
+
+            }
+            catch (LoginException e)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.InternalServerError, e.Message); ;
+            }
+
+        }
+
+        // GET: Product
+        public ActionResult Index()
+        {
+            return View();
+        }
+
+        //GET: /Product/Products
+        [HttpGet]
+        public ActionResult ViewProducts()
+        {
+            var product = (from p in Context.ProductModelSet
+                           select p).ToList();
+            return View(product);
+        }
+
+        // GET: /StoreManager/Create
+        public ActionResult AddProduct()
+        {
+
+            ProductModel prod = new ProductModel();
+            return View(prod);
+        }
+
+
+        //POST /AddProduct
+        [HttpPost]
+        public ActionResult AddProduct(ProductModel product, HttpPostedFileBase upload)
+        {
+
+            var errors = ModelState
+                    .Where(x => x.Value.Errors.Count > 0)
+                    .Select(x => new { x.Key, x.Value.Errors })
+                     .ToArray();
+            
+                if (!ModelState.IsValid)
+                    return new HttpStatusCodeResult(HttpStatusCode.InternalServerError, "Internal Error details");
+
+                if (ModelState.IsValid && upload != null)
+                {
+                    //product.productImage = new byte[upload.ContentLength];
+                    //upload.InputStream.Read(product.productImage, 0, upload.ContentLength);
+                    //var base64 = Convert.ToBase64String(product.productImage);
+                    //var prodImage = string.Format("data:image/png;base64,{0}", base64);
+
+                    var p = new ProductModel
+                    {
+                        productName = product.productName,
+                        productDescription = product.productDescription,
+                        price = product.price,
+                        vendor = product.vendor,
+                        quantityInStock = product.quantityInStock,
+                      //  ImageSource = product.ImageSource
+                    };
+
+
+                    //Context.ProductModelSet.Add(product);
+                    Context.ProductModelSet.Add(p);
+                    Context.SaveChanges();
+                    return RedirectToAction("Index", "Home");
+
+                }
+            return View(product);
+        }
+
+
+        [HttpGet]
+        public ActionResult GetProfile(int? id)
+        {
+            if (id == null)
+                id = 0;
+            try
+            {
+                var p = (from a in Context.CustomerModelSet.Where(a => a.customerID == id).Select(a => new CustomerModel())
+                         select a).Single();
+                p.customerID = p.customerID;
+                p.firstName = p.firstName;
+                p.lastName = p.lastName;
+                p.phone = p.phone;
+                p.email = p.email;
+                p.password = p.password;
+                p.state = p.state;
+                
+                
+                return View(p);
+            }
+            catch (Exception e)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.InternalServerError, e.Message);
+            }
         }
     }
 }

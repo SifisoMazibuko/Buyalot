@@ -1,5 +1,6 @@
 ﻿<form class="form-horizontal" name="loginForm" novalidate>
     <br />
+    <div class="alert alert-success" ng-if="handleSuccess">{{successMessage}}</div>
     <fieldset>
         <legend class="container">Login</legend>
         <div class="form-group" show-errors>
@@ -25,11 +26,11 @@
         <input type="reset" class="btn btn-warning" value="Reset"
                ng-click="resetForm()" />
         <input type="submit" class="btn btn-primary" value="Login"
-               ng-click="submitForm()" />
-        <div class="col-sm-12">
+               ng-click="submitForm()"  ng-model="successMessage"/>
+        <!--<div class="col-sm-12">
             <br />
                <div class="alert alert-success" ng-if="handleSuccess">{{successMessage}}</div>
-            </div>
+            </div>-->
             <div>
             <br />
                <div class="alert alert-danger" ng-if="hasError">{{errorMessage}}</div>

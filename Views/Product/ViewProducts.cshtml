@@ -1,0 +1,28 @@
+﻿@model IEnumerable< Buyalot.Models.ProductModel>
+
+@{
+    ViewBag.Title = "ViewProducts";
+}
+
+<div class="container">
+    <h2>Available Products</h2>
+    <div class="col-md-2 column">
+        @foreach (var item in Model)
+            {
+            <div>
+                @{ var base64 = Convert.ToBase64String(item.productImage);
+                    var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+
+                }
+                <img src='@imgSrc' style="max-width:170px; max-height:170px;" />
+                <p style="color:#0094ff ">@Html.DisplayFor(modelItem => item.productName)</p>
+                <p style="color:#0094ff ">@Html.DisplayFor(modelItem => item.productDescription)</p>
+                <p style="color:#ff0000">R @Html.DisplayFor(modelItem => item.price)</p>
+            </div>
+                    }
+        @*<div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Add to Cart" class="btn btn-success" />
+            </div>*@
+    </div>
+
+</div>

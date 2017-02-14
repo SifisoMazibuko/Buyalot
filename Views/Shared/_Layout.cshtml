@@ -2,7 +2,7 @@
     ViewBag.Title = "Home Page";
 }
 <!DOCTYPE html>
-<html ng-app="AngularApp">
+<html @*ng-app="AngularApp"*@>
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -39,25 +39,13 @@
                 @Html.ActionLink("Buyalot", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse" collapse="navbarProperties.isCollapsed">
-                <ul class="nav navbar-nav">
-                    <li class="dropdown" dropdown="">
-                        <a href="#" class="dropdown-toggle" dropdown-toggle="" data-toggle="dropdown">
-                            <span>Configuration</span><b class="caret"></b>
-                        </a>
-                        <ul class="dropdown-menu" role="menu">
-                            <li>
-                                <a href="/#/addProduct">Add Product</a>
-                            </li>
-
-                        </ul>
-                    </li>
-                </ul>
-
 
                 <ul class="nav navbar-nav navbar-right">
-                    @*<a href="/#/">Welcome {{loginModel.firstName}}</a>*@
+                   @if (Session["cusName"] != null)
+                   {
+                    <li><a>Welcome @Session["cusName"] </a></li>
+                   }
                     <li><a href="/#/login">Login</a></li>
-                    <li><a href="/#/adminLogin">Admin Login</a></li>
                     <li><a href="/#/register">Register</a></li>
 
                     <li class="dropdown" dropdown="">
@@ -73,12 +61,14 @@
 
                     <li><a href="#" ng-click="logout()">Logout</a></li>
                 </ul>
+
+                @*@Html.Partial("_LoginPartial")*@
             </div>
         </div>
     </div>
 
 
-    <div class="navbar-collapse collapse" collapse="navbarProperties.isCollapsed">
+    @*<div class="navbar-collapse collapse" collapse="navbarProperties.isCollapsed">
         <ul class="nav navbar-nav">
             <li class="dropdown" dropdown="">
                 <a href="#" class="dropdown-toggle" dropdown-toggle="" data-toggle="dropdown">
@@ -93,6 +83,22 @@
             </li>
         </ul>
     </div>
+
+
+    <div class="navbar-collapse collapse" collapse="navbarProperties.isCollapsed">
+        <div class="nav navbar-nav">
+            <select name="CategoryList" ng-model="productCategoryModel.CategoryList" class="form-control" ng-required="true">
+                <option value="">--Browse Category--</option>
+                <option ng-repeat="CategoryList in CategoryLists" value="{{CategoryList.value}}">
+                    {{CategoryList.categoryName}}
+                </option>
+            </select>
+    </div>
+    </div>*@
+
+
+
+
     @*<div ng-view></div>*@
     <div class="container mainContent">
         <br />
@@ -111,9 +117,5 @@
         </footer>
     </div>
 
-    @*@Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/jqueryval")
-    @Scripts.Render("~/bundles/bootstrap")
-    @Scripts.Render("~/bundles/Site")*@
 </body>
 </html>

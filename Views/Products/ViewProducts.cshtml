@@ -1,0 +1,97 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    @model IEnumerable<Buyalot.Models.ProductModel>
+
+    @{
+        ViewBag.Title = "View Products";
+    }
+    
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/stylesheet.css">
+    <link rel="stylesheet" type="text/css" href="css/bootstrap-theme.min.css">
+    <link href="css/dataTables.bootstrap.min.css" rel="stylesheet">
+
+</head>
+<body>
+    <h2>ViewProducts</h2>
+
+    <div class="container">
+
+        <table id="myTable">
+            <thead>
+                @*<tr><th>Product ID</th><th>Product Name</th><th>Price</th><th>Vendor</th><th>Quantity</th><th>Image</th></tr>*@
+                <tr><td></td><td></td>
+            </thead>
+            <tbody>
+                @foreach (var product in Model)
+                {                    
+                    <tr>                        
+                        <td>
+
+                            @{
+                                var base64 = Convert.ToBase64String(product.productImage);
+                                var prodImage = string.Format("data:image/png;base64,{0}", base64);
+
+                                var name1 = product.vendor + " " + product.productName;
+                                var price1 = product.price.ToString();
+                                var quantity1 = product.quantityInStock;
+                                var check1 = "";
+
+                                
+                            }
+                            <img src="@prodImage" style="max-height:200px;max-width:200px;" />
+                        </td>
+                        <td>
+
+                            <table>
+                                <thead><tr><td></td></tr></thead>
+                                <tbody>
+                                    <tr>
+                                        <td><b>@name1</b></td>
+                                    </tr>
+                                    <tr>
+                                        <td>@price1</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            @if (quantity1 > 0)
+                                            {
+                                                check1 = "Available";
+                                                //<p style="color:green"><b>check1</b></p>
+                                                <p style="color:green"><b>@check1</b></p>
+
+                                            }
+                                            else
+                                            {
+
+                                                check1 = "Out Of Stock";
+                                                <p style="color:red"><b>@check1</b></p>
+
+                                            }
+
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+
+
+                    </tr>
+                                }
+            </tbody>
+
+        </table>
+
+    </div>
+    <script src="~/Scripts/jquery.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Scripts/jquery.dataTables.min.js"></script>
+    <script src="~/Scripts/dataTables.bootstrap.min.js"></script>
+
+</body>
+</html>
+
+
+

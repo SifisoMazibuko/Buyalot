@@ -1,4 +1,4 @@
-﻿using Buyalot.Models;
+﻿ using Buyalot.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -11,10 +11,12 @@ namespace Buyalot.DbConnection
     public class DataContext : DbContext
     {
         //connection to db
-        //public DataContext() :
-        //    base("BuyalotDBContext")
-        //{
-        //}
+        public DataContext() :
+            base("BuyalotDBContext")
+        {
+            this.Configuration.LazyLoadingEnabled = true;
+            this.Configuration.ProxyCreationEnabled = true;
+        }
         //Collections of the entities for the application
         public DbSet<CustomerModel> CustomerModelSet { get; set; }
         public DbSet<ProductModel> ProductModelSet { get; set; }
@@ -26,7 +28,10 @@ namespace Buyalot.DbConnection
         public DbSet<AddressModel> AddressModelSet { get; set; }
         public DbSet<AdminModel> AdminModelSet { get; set; }
 
- 
-      
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
+        }
     }
 }
