@@ -1,4 +1,10 @@
-﻿@{
+﻿@using Buyalot.Repository;
+
+@{
+    ICategoryRepository iCategoryRepository = new CategoryRepository();
+}
+
+@{
     ViewBag.Title = "Home Page";
 }
 <!DOCTYPE html>
@@ -6,7 +12,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - Buyalot</title>
+    <title>@ViewBag.Title</title>
 
     @Styles.Render("~/Content/css")
     @Styles.Render("~/Content/bootstrap.min.css")
@@ -59,12 +65,38 @@
                         </ul>
                     </li>
 
-                    <li><a href="#" ng-click="logout()">Logout</a></li>
+                    @*<li><a href="#" ng-click="logout()">Logout</a></li>*@
                 </ul>
 
                 @*@Html.Partial("_LoginPartial")*@
             </div>
         </div>
+    </div>
+    
+
+    <hr />
+    <div class="container">
+        <ul class="nav navbar-left col-lg-2">
+            <li class="dropdown">
+                <div class="dropdown-toggle" data-toggle="dropdown">Browse By Category<b class="caret"></b></div>
+                <ul class="dropdown-menu">
+                    @foreach (var category in iCategoryRepository.findAll())
+                    {
+                        <li><a href="@Url.Action("Category", "Home", new { id = category.prodCategoryID })">@category.categoryName</a></li>
+                    }
+
+                </ul>
+            </li>
+        </ul>
+
+
+        @using (Html.BeginForm())
+        {
+            <Div class="nav form-inline">
+                <input type="search" class="form-control" name="SearchString" style="max-width:800px;" id="SearchString" onkeyup="myFunction()" placeholder="search for product" />
+                <input type="submit" value="Filter" />
+            </Div>
+        }
     </div>
 
 
@@ -96,7 +128,7 @@
     </div>
     </div>*@
 
-
+    @Html.Partial("Index")
 
 
     @*<div ng-view></div>*@

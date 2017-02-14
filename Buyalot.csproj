@@ -207,6 +207,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\ProductCategoriesManagerController.cs" />
     <Compile Include="Controllers\ProductsController.cs" />
     <Compile Include="Controllers\ShoppingCartController.cs" />
     <Compile Include="Controllers\ViewSwitcherController.cs" />
@@ -238,6 +239,9 @@
     <Compile Include="Provider\Cipher.cs" />
     <Compile Include="Provider\LoginException.cs" />
     <Compile Include="Provider\RegisterException.cs" />
+    <Compile Include="Repository\CategoryRepository.cs" />
+    <Compile Include="Repository\ICategoryRepository.cs" />
+    <Compile Include="Repository\Repository01.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -352,11 +356,13 @@
     <Content Include="Views\Products\AddToCart.cshtml" />
     <Content Include="Views\Products\ViewProducts.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
+    <Content Include="Views\Shared\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Entities\" />
     <Folder Include="Scripts\i18n\" />
+    <Folder Include="Views\ProductCategoriesManager\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
