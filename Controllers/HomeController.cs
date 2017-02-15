@@ -34,6 +34,7 @@ namespace Buyalot.Controllers
 
         public ActionResult Index()
         {
+            //ViewBag.ProductList = Context.ProductModelSet.ToList();
             return View();
         }
 

@@ -157,6 +157,8 @@ namespace Buyalot.Controllers
             return -1;
 
         }
+
+        //[Authorize(Roles = "Customer")]
         public ActionResult AddToCart(int id)
         {
             var db = new DataContext();

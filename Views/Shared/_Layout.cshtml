@@ -8,17 +8,17 @@
     ViewBag.Title = "Home Page";
 }
 <!DOCTYPE html>
-<html @*ng-app="AngularApp"*@>
+<html ng-app="AngularApp">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title</title>
+    <title>@ViewBag.Title - Buyalot</title>
 
     @Styles.Render("~/Content/css")
     @Styles.Render("~/Content/bootstrap.min.css")
     @Scripts.Render("~/bundles/Angular")
     @Scripts.Render("~/bundles/AngularApp")
-    @Scripts.Render("~/bundles/jqueryval") 
+    @Scripts.Render("~/bundles/jqueryval")
 
     <script src="~/app/Directives/Validation.js"></script>
 
@@ -33,7 +33,7 @@
         appInsights.trackPageView();
     </script>
 </head>
-<body>
+<body ng-app="HomeController">
     <div class="navbar navbar-default navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
@@ -45,36 +45,34 @@
                 @Html.ActionLink("Buyalot", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse" collapse="navbarProperties.isCollapsed">
-
-                <ul class="nav navbar-nav navbar-right">
-                   @if (Session["cusName"] != null)
-                   {
-                    <li><a>Welcome @Session["cusName"] </a></li>
-                   }
+                 <ul class="nav navbar-nav navbar-right">
+                    @if (Session["cusName"] != null)
+                    {
+                        <li><a>Welcome @Session["cusName"] </a></li>
+                    }
                     <li><a href="/#/login">Login</a></li>
                     <li><a href="/#/register">Register</a></li>
 
-                    <li class="dropdown" dropdown="">
-                        <a href="#" class="dropdown-toggle" dropdown-toggle="" data-toggle="dropdown">
-                            <span>My Account</span><b class="caret"></b>
-                        </a>
-                        <ul class="dropdown-menu" role="menu">
-                            <li><a href="/#/trackOrder">Track Order</a></li>
-                            <li><a href="/#/profile">Profile</a></li>
+                    @if (Session["cusName"] != null)
+                    {
+                        <li class="dropdown" dropdown="">
+                            <a href="#" class="dropdown-toggle" dropdown-toggle="" data-toggle="dropdown">
+                                <span>My Account</span><b class="caret"></b>
+                            </a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="/#/trackOrder">Track Order</a></li>
+                                <li><a href="/#/profile">Profile</a></li>
 
-                        </ul>
-                    </li>
+                            </ul>
+                        </li>
+                        <li><a href="#" ng-click="logout()">Logout</a></li>
 
-                    @*<li><a href="#" ng-click="logout()">Logout</a></li>*@
+                    }
                 </ul>
-
-                @*@Html.Partial("_LoginPartial")*@
             </div>
         </div>
     </div>
-    
 
-    <hr />
     <div class="navbar-collapse collapse" collapse="navbarProperties.isCollapsed">
         <ul class="nav navbar-left col-lg-2">
             <li class="dropdown">
@@ -91,38 +89,7 @@
 
     </div>
 
-
-    @*<div class="navbar-collapse collapse" collapse="navbarProperties.isCollapsed">
-        <ul class="nav navbar-nav">
-            <li class="dropdown" dropdown="">
-                <a href="#" class="dropdown-toggle" dropdown-toggle="" data-toggle="dropdown">
-                    <span>Browse Category</span><b class="caret"></b>
-                </a>
-                <ul class="dropdown-menu" role="menu">
-                    <li><a href="/#/Desktops">Desktops</a></li>
-                    <li><a href="/#/Laptops">Laptops</a></li>
-                    <li><a href="/#/MobilePhones">Mobile Phones</a></li>
-
-                </ul>
-            </li>
-        </ul>
-    </div>
-
-
-    <div class="navbar-collapse collapse" collapse="navbarProperties.isCollapsed">
-        <div class="nav navbar-nav">
-            <select name="CategoryList" ng-model="productCategoryModel.CategoryList" class="form-control" ng-required="true">
-                <option value="">--Browse Category--</option>
-                <option ng-repeat="CategoryList in CategoryLists" value="{{CategoryList.value}}">
-                    {{CategoryList.categoryName}}
-                </option>
-            </select>
-    </div>
-    </div>*@
-
-
-
-    <div class="container mainContent" ng-app="AngularApp">
+    <div class="container mainContent">
         <br />
         <div ng-view>
         </div>
@@ -138,6 +105,5 @@
             <p>&copy; @DateTime.Now.Year - Buyalot</p>
         </footer>
     </div>
-
 </body>
 </html>

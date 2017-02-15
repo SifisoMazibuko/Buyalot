@@ -14,6 +14,7 @@ using System.Net;
 using Buyalot.Provider;
 using System.Web.Security;
 using AftaScool.BL.Util;
+using System.Data.Entity;
 
 namespace Buyalot.Controllers
 {
@@ -237,30 +238,64 @@ namespace Buyalot.Controllers
         }
 
 
+
+        //[HttpPost]
+        //public ActionResult GetProfile(int? id)
+        //{
+        //    if (id == null)
+        //        id = 0;
+        //    try
+        //    {
+        //        var p = (from a in Context.CustomerModelSet.Where(a => a.customerID == id).Select(a => new CustomerModel())
+        //                 select a).Single();
+        //        p.customerID = p.customerID;
+        //        p.firstName = p.firstName;
+        //        p.lastName = p.lastName;
+        //        p.phone = p.phone;
+        //        p.email = p.email;
+        //        p.password = p.password;
+        //        p.state = p.state;
+                
+                
+        //        return View(p);
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        return new HttpStatusCodeResult(HttpStatusCode.InternalServerError, e.Message);
+        //    }
+        //}
+
         [HttpGet]
         public ActionResult GetProfile(int? id)
         {
             if (id == null)
-                id = 0;
-            try
             {
-                var p = (from a in Context.CustomerModelSet.Where(a => a.customerID == id).Select(a => new CustomerModel())
-                         select a).Single();
-                p.customerID = p.customerID;
-                p.firstName = p.firstName;
-                p.lastName = p.lastName;
-                p.phone = p.phone;
-                p.email = p.email;
-                p.password = p.password;
-                p.state = p.state;
-                
-                
-                return View(p);
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            catch (Exception e)
+
+            CustomerModel cus = Context.CustomerModelSet.Find(id);
+            if (cus == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.InternalServerError, e.Message);
+                return HttpNotFound();
             }
+
+            return View();
         }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult GetProfile([Bind(Include = "customerID,firstName,lastName,phone,email,password,confirmPassword,state")] CustomerModel cus)
+        {
+            if (ModelState.IsValid)
+            {
+                Context.Entry(cus).State = EntityState.Modified;
+                Context.SaveChanges();
+               // ViewBag.result = "Category " + productCategory.categoryName + " Updated Succesfully!";
+                return View(cus);
+            }
+
+            return RedirectToAction("Index");
+        }
+
     }
 }

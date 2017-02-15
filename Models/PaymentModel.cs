@@ -18,9 +18,9 @@ namespace Buyalot.Models
         [ForeignKey("customerID")]
         public virtual CustomerModel customer { get; set; }
 
-        //public int orderID { get; set; }
-        //[ForeignKey("orderID")]
-        //public virtual OrderModel order { get; set; }
+        public int orderID { get; set; }
+        [ForeignKey("orderID")]
+        public virtual OrderModel order { get; set; }
         public DateTime paymentDate { get; set; }
         public string paymentType { get; set; }
         public decimal totalPrice { get; set; }

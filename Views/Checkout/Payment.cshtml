@@ -1,0 +1,157 @@
+﻿@model Buyalot.Models.BillingModel
+
+@{
+    ViewBag.Title = "Payment";
+   // Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<fieldset>
+    <legend class="container">Payment </legend>
+    @using (Html.BeginForm("Payment", "Checkout",FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+
+            <div class="form-group">
+                <label for="CardHolderName" class="col-sm-3 control-label">Card Holder Name:</label>
+                <div class="col-sm-9">
+                    @Html.EditorFor(model => model.cardHolderName, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.cardHolderName, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="cardNumber" class="col-sm-3 control-label">Card Number:</label>
+                <div class="col-sm-9">
+                    @Html.EditorFor(model => model.cardNumber, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.cardNumber, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="cardType" class="col-sm-3 control-label">Card Type:</label>
+                <div class="col-sm-9">
+                    <label for="radio-1" class="css-label">
+                        @Html.RadioButton("cardType", "Pay Using Savings Card", new { @class = "css-checkbox" })
+                        Saving Card
+                    </label>
+
+                    <label for="radio-1" class="css-label">
+                       @Html.RadioButton("cardType", "Pay Using Cheque Card", new { @class = "css-checkbox" })
+                       Cheque 
+                    </label>
+                      
+                        @*@Html.RadioButton("cardType", "Pay Using Credit Card", new { @class = "css-checkbox" })
+                        <p>Credit Card</p>*@
+                        @*<select>
+                            <option value="Select">..Select..</option>
+                            <option value="Debit">Debit</option>
+                            <option value="Credit">Credit</option>
+                     </select>*@
+            </div>
+
+            </div>
+            <div class="form-group">
+                <label for="expDate" class="col-sm-3 control-label">Expiring Date:</label>
+                <div class="col-sm-9">
+                    @Html.DropDownListFor(model => model.cardType, new SelectList(new string[] { "Month", "1","2","3","4","5","6","7","8","9","10","11","12" }))
+                    @Html.DropDownListFor(model => model.cardType, new SelectList(new string[] { "Year", "2017", "2018", "2019", "2020", "2021", "2022", "2023", "2024", "2025", "2026", "2027", "2028" }))
+                    @*<select>
+                        <option value="Month">Month</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                        <option value="11">11</option>
+                        <option value="12">12</option>
+                    </select>
+                    <select>
+                        <option value="Year">Year</option>
+                        <option value="2017">2017</option>
+                        <option value="2018">2018</option>
+                        <option value="2019">2019</option>
+                        <option value="2020">2020</option>
+                        <option value="2021">2021</option>
+                        <option value="2022">2022</option>
+                        <option value="2023">2023</option>
+                        <option value="2024">2024</option>
+                        <option value="2025">2025</option>
+                        <option value="2026">2026</option>
+                        <option value="2027">2027</option>
+                        <option value="2028">2028</option>
+                    </select>*@
+                </div>
+
+            </div>
+
+
+            <div class="col-sm-offset-3 col-sm-9">
+                <button class="btn btn-primary"><span class="glyphicon glyphicon-lock"></span> Secure Checkout</button>
+            </div>
+        </div>
+    }
+
+</fieldset>
+   
+
+
+@*@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>BillingModel</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+                @Html.LabelFor(model => model.customerID, "customerID", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("customerID", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.customerID, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.cardNumber, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.cardNumber, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.cardNumber, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.cardType, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.cardType, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.cardType, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.expDate, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.expDate, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.expDate, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.cardHolderName, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.cardHolderName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.cardHolderName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}*@

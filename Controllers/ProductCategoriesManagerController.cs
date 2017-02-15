@@ -10,6 +10,7 @@ using System.Web.Mvc;
 
 namespace Buyalot.Controllers
 {
+
     public class ProductCategoriesManagerController : Controller
     {
         private DataContext Context { get; set; }
@@ -52,7 +53,7 @@ namespace Buyalot.Controllers
             return View(productCategory);
         }
 
-        [Authorize(Roles = "Admin")]
+ 
         // GET: ProductCategories/Create
         public ActionResult Create()
         {

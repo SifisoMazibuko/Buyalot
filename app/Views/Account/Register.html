@@ -83,8 +83,10 @@
     <div class="col-sm-offset-3 col-sm-9">
         <input type="reset" class="btn btn-warning" value="Reset"
                ng-click="resetForm()" />
-        <input type="submit" class="btn btn-primary" value="Register"
-               ng-click="submitForm()" data-ng-click="switchBool('handleSuccess')"/>{{successMessage}}
+        <!--<input type="submit" class="btn btn-primary" value="Register"
+               ng-click="submitForm()" data-ng-click="switchBool('handleSuccess')"/>{{successMessage}}-->
+
+        <button class="btn btn-primary" type="submit" ng-click="submitForm()" ng-model="successMessage"><span class="glyphicon glyphicon-user"></span> Register</button>
         <!--<div class="col-sm-12">
             <br />
             <div class="alert alert-success" ng-if="handleSuccess">{{successMessage}}</div>
