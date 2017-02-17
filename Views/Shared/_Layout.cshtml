@@ -21,7 +21,49 @@
     @Scripts.Render("~/bundles/jqueryval")
 
     <script src="~/app/Directives/Validation.js"></script>
+    <style type="text/css">
+        ul {
+            padding: 0;
+            list-style: none;
+            background: #f2f2f2;
+        }
 
+            ul li {
+                display: inline-block;
+                position: relative;
+                line-height: 21px;
+                text-align: left;
+            }
+
+                ul li a {
+                    display: block;
+                    padding: 8px 25px;
+                    color: #333;
+                    text-decoration: none;
+                }
+
+                    ul li a:hover {
+                        color: #fff;
+                        background: #939393;
+                    }
+
+                ul li ul.dropdown {
+                    min-width: 100%; /* Set width of the dropdown */
+                    background: #f2f2f2;
+                    display: none;
+                    position: absolute;
+                    z-index: 999;
+                    left: 0;
+                }
+
+                ul li:hover ul.dropdown {
+                    display: block; /* Display the dropdown */
+                }
+
+                ul li ul.dropdown li {
+                    display: block;
+                }
+    </style>
     <script type="text/javascript">
         var appInsights=window.appInsights||function(config){
             function r(config){t[config]=function(){var i=arguments;t.queue.push(function(){t[config].apply(t,i)})}}var t={config:config},u=document,e=window,o="script",s=u.createElement(o),i,f;for(s.src=config.url||"//az416426.vo.msecnd.net/scripts/a/ai.0.js",u.getElementsByTagName(o)[0].parentNode.appendChild(s),t.cookie=u.cookie,t.queue=[],i=["Event","Exception","Metric","PageView","Trace","Ajax"];i.length;)r("track"+i.pop());return r("setAuthenticatedUserContext"),r("clearAuthenticatedUserContext"),config.disableExceptionTracking||(i="onerror",r("_"+i),f=e[i],e[i]=function(config,r,u,e,o){var s=f&&f(config,r,u,e,o);return s!==!0&&t["_"+i](config,r,u,e,o),s}),t
@@ -78,9 +120,9 @@
         <ul class="nav navbar-left">
             <li class="dropdown" dropdown="">
                 <a href="#" class="dropdown-toggle" dropdown-toggle="" data-toggle="dropdown">
-                    <span>Configuration</span><b class="caret"></b>
+                    <span>Available Product Categories</span><b class="caret"></b>
                 </a>
-                <ul class="dropdown-menu" role="menu">
+                <ul class="dropdown" role="menu">
 
 
                     @foreach (var category in iCategoryRepository.findAll())
