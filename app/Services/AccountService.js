@@ -42,6 +42,22 @@
             });
         }
 
+        var profile = function (firstName, lastName, phone, email, password, confirmPassword, address, city, postalCode, state) {
+            return $http.post("/Account/GetProfile", {
+                FirstName: firstName,
+                LastName: lastName,
+                Phone: phone,
+                Email: email,
+                Password: password,
+                ConfirmPassword: confirmPassword,
+                Address: address,
+                City: city,
+                PostalCode: postalCode,
+                State: state
+            });
+
+        }
+
         var profileGet = function (customerId) {
             return $http.get("/Account/GetProfile/" + customerId);
         }
@@ -51,7 +67,8 @@
             register: register,
             addProduct: addProduct,
             adminLogin: adminLogin,
-            profileGet: profileGet
+            profileGet: profileGet,
+            profile: profile
         }
     }
 ]);
