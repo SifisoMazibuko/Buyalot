@@ -32,37 +32,38 @@ namespace Buyalot.Controllers
 
         }
 
-        public ActionResult Index()
-        {
-            //ViewBag.ProductList = Context.ProductModelSet.ToList();
-            return View();
-        }
-
-        //public ActionResult Index(string searchString)
+        //public ActionResult Index()
         //{
-        //    var db = new DataContext();
-
-        //    var product = (from p in db.ProductModelSet
-        //                   select p);
-
-
-        //    if (!String.IsNullOrEmpty(searchString))
-        //    {
-        //        product = product.Where(s => s.productName.StartsWith(searchString)
-        //                               || s.productName.Contains(searchString)
-        //                               || s.vendor.StartsWith(searchString)
-        //                               || s.vendor.Contains(searchString));
-
-        //    }
-        //    return View(product);
-
+        //    //ViewBag.ProductList = Context.ProductModelSet.ToList();
+        //    return View();
         //}
+
+        public ActionResult Index(string searchString)
+        {
+            var db = new DataContext();
+
+            var product = (from p in db.ProductModelSet
+                           select p);
+
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                product = product.Where(s => s.productName.StartsWith(searchString)
+                                       || s.productName.Contains(searchString)
+                                       || s.vendor.StartsWith(searchString)
+                                       || s.vendor.Contains(searchString));
+
+            }
+            return View(product);
+
+        }
 
         public ActionResult Category(int id)
         {
             var category = iCategoryRepository.find(id);
             ViewBag.category = category;
             ViewBag.products = category.ProdCategorys.ToList();
+
 
             return View("Category");
         }

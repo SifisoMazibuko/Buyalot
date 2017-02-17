@@ -217,9 +217,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201702100714551_InitialCreate.cs" />
-    <Compile Include="Migrations\201702100714551_InitialCreate.Designer.cs">
-      <DependentUpon>201702100714551_InitialCreate.cs</DependentUpon>
+    <Compile Include="Migrations\201702171329563_InitialCreate.cs" />
+    <Compile Include="Migrations\201702171329563_InitialCreate.Designer.cs">
+      <DependentUpon>201702171329563_InitialCreate.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -359,6 +359,8 @@
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Checkout\Payment.cshtml" />
     <Content Include="Views\Checkout\CheckoutComplete.cshtml" />
+    <Content Include="Views\Home\Category.cshtml" />
+    <Content Include="Views\Products\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -389,8 +391,8 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201702100714551_InitialCreate.resx">
-      <DependentUpon>201702100714551_InitialCreate.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201702171329563_InitialCreate.resx">
+      <DependentUpon>201702171329563_InitialCreate.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

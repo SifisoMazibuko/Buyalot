@@ -1,0 +1,54 @@
+﻿
+@{
+    ViewBag.Title = "Category";
+}
+
+<h2>Category</h2>
+<div class="crumb_nav"> <a href="@Url.Action("Index", "Home")">Home</a> &gt;&gt; @ViewBag.category.categoryName </div>
+<br />
+<div class="new_products">
+    @foreach (var product in ViewBag.products)
+    {
+    <div class="new_prod_box">
+        <a href="@Url.Action("Details", "Products", new { id = product.productID })">@product.productName</a>
+
+        @{
+
+            var base64 = Convert.ToBase64String(product.productImage);
+            var prodImage = string.Format("data:image/png;base64,{0}", base64);
+            var quantity1 = product.quantityInStock;
+            var check1 = "";
+
+            var price1 = product.price.ToString();
+
+            var R = "R";
+            var price = R + "" + price1.ToString();
+
+
+        }
+        @*<img src="@prodImage" style="max-height:100px;max-width:100px;" />*@
+        <div class="new_prod_bg">
+            <a href="#">
+                <img src="@prodImage" alt="@product.productName" class="thumb" border="0" />
+            </a>
+            <p><b>@product.vendor + " " + @product.productName</b></p>
+            <p><b>@price</b></p>
+
+            @if (quantity1 > 0)
+                {
+                    check1 = "In Stock";
+                <p style="color:green">@check1</p>
+            }
+            else
+            {
+                check1 = "Out Of Stock";
+                <p style="color:red">@check1</p>
+
+            }
+        </div>
+    </div>
+    }
+</div>
+
+
+

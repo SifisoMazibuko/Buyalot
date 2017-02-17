@@ -44,7 +44,8 @@ namespace Buyalot.Models
         public byte[] productImage { get; set; }
 
         public virtual ICollection<OrderDetailsModel> OrderDetails { get; set; }
-
+        public virtual ProductCategoryModel ProductCategory { get; set; }
+        public List<ProductCategoryModel> AllocatedCategory { get; set; }
 
     }
 }

@@ -1,7 +1,69 @@
-﻿@model Buyalot.Models.ProductModel
+﻿<!DOCTYPE html>
+<html>
+<head>
+    @model IEnumerable<Buyalot.Models.ProductModel>
 
-@{
-    ViewBag.Title = "Home Page";
-}
+    @{
+        ViewBag.Title = "Home Page";
+    }
 
- 
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/stylesheet.css">
+    <link rel="stylesheet" type="text/css" href="css/bootstrap-theme.min.css">
+    <link href="css/dataTables.bootstrap.min.css" rel="stylesheet">
+
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            @{
+                var column_count = 0;
+            }
+
+            @foreach (var product in Model)
+            {
+                column_count++;
+
+                <div class="table col-lg-10" style="width:200px; height:225px; text-align:left; display:inline-block; margin:0 10px 10px 0;" id="myTable">
+                    @{
+                        var base64 = Convert.ToBase64String(product.productImage);
+                        var prodImage = string.Format("data:image/png;base64,{0}", base64);
+
+                        var name1 = product.vendor + " " + product.productName;
+                        var price1 = product.price.ToString();
+                        var quantity1 = product.quantityInStock;
+                        var check1 = "";
+
+                        var R = "R";
+                        var price = R + "" + price1.ToString();
+
+
+
+                    }
+                    <img src="@prodImage" style="max-height:200px;max-width:200px;" />
+                    <p>@name1</p>
+                    <p>@price</p>
+                    @if (quantity1 > 0)
+                {
+                    check1 = "In Stock";
+                        <p style="color:green">@check1</p>
+                    }
+                    else
+                    {
+                        check1 = "Out Of Stock";
+                        <p style="color:red">@check1</p>
+
+                    }
+
+
+                </div>
+
+
+                        }
+            <br />
+            <br />
+        </div>
+    </div>
+</body>
+</html>
+

@@ -37,7 +37,21 @@ namespace Buyalot.Controllers
             ViewBag.ProductList = db.ProductModelSet.ToList();
             return View();
         }
-        
+
+        public ActionResult Details(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            ProductModel product = Context.ProductModelSet.Find(id);
+            if (product == null)
+            {
+                return HttpNotFound();
+            }
+            return View(product);
+        }
+
         public ActionResult ViewProducts()
         {
             var product = (from p in Context.ProductModelSet

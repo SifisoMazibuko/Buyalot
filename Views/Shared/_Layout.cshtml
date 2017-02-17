@@ -8,7 +8,7 @@
     ViewBag.Title = "Home Page";
 }
 <!DOCTYPE html>
-<html ng-app="AngularApp">
+<html @*ng-app="AngularApp"*@>
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -75,7 +75,7 @@
         appInsights.trackPageView();
     </script>
 </head>
-<body ng-app="HomeController">
+<body @*ng-app="HomeController"*@>
     <div class="navbar navbar-default navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
@@ -114,10 +114,11 @@
             </div>
         </div>
     </div>
+    <hr />
 
     <div class="navbar-collapse collapse" collapse="navbarProperties.isCollapsed">
 
-        <ul class="nav navbar-left">
+        <ul class="nav navbar-left col-lg-2">
             <li class="dropdown" dropdown="">
                 <a href="#" class="dropdown-toggle" dropdown-toggle="" data-toggle="dropdown">
                     <span>Available Product Categories</span><b class="caret"></b>
@@ -133,8 +134,18 @@
                 </ul>
             </li>
         </ul>
+      </div>
 
-    </div>
+    <div class="container">
+
+            @using (Html.BeginForm())
+            {
+                <Div class="nav form-inline">
+                    <input type="search" class="form-control" name="SearchString" style="max-width:800px;" id="SearchString" onkeyup="myFunction()" placeholder="search for product" />
+                    <input type="submit" value="Search" />
+                </Div>
+            }
+    </div>   
     
 
     <div class="container mainContent">

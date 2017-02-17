@@ -13,14 +13,15 @@ namespace Buyalot.Models
         [Key]
         [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
         public int paymentID { get; set; }
-        public int customerID { get; set; }
 
+        public int customerID { get; set; }
         [ForeignKey("customerID")]
         public virtual CustomerModel customer { get; set; }
 
         public int orderID { get; set; }
         [ForeignKey("orderID")]
         public virtual OrderModel order { get; set; }
+
         public DateTime paymentDate { get; set; }
         public string paymentType { get; set; }
         public decimal totalPrice { get; set; }
