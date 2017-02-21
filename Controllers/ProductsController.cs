@@ -33,8 +33,7 @@ namespace Buyalot.Controllers
         // GET: Product
         public ActionResult Index()
         {
-            var db = new DataContext();
-            ViewBag.ProductList = db.ProductModelSet.ToList();
+            ViewBag.ProductList = Context.ProductModelSet.ToList();
             return View();
         }
 
@@ -139,11 +138,9 @@ namespace Buyalot.Controllers
 
         public ActionResult populateDropDown()
         {
-            var db = new DataContext();
-            
             List<SelectListItem> CustIDlistItems = new List<SelectListItem>();
 
-            var getCategory = db.ProductCategoryModelSet.ToList();
+            var getCategory = Context.ProductCategoryModelSet.ToList();
             foreach (var category in getCategory)
             {
                 CustIDlistItems.Add(new SelectListItem
@@ -167,20 +164,19 @@ namespace Buyalot.Controllers
                 {
                     return i;
                 }
+                ViewData["CartCount"] = cart.Count;
             }
             return -1;
 
         }
 
-        //[Authorize(Roles = "Customer")]
+        //[Authorize(Roles = "CustomerViewModel")]
         public ActionResult AddToCart(int id)
         {
-            var db = new DataContext();
-
             if (Session["Cart"] == null)
             {
                 List<Item> cart = new List<Item>();
-                cart.Add(new Item(db.ProductModelSet.Find(id), 1));
+                cart.Add(new Item(Context.ProductModelSet.Find(id), 1));
 
                 Session["Cart"] = cart;
                 Session["CartCounter"] = cart.Count;
@@ -193,7 +189,7 @@ namespace Buyalot.Controllers
 
                 if (index == -1)
                 {
-                    cart.Add(new Item(db.ProductModelSet.Find(id), 1));
+                    cart.Add(new Item(Context.ProductModelSet.Find(id), 1));
                     Session["CartCounter"] = cart.Count;
                 }
                 else
@@ -214,8 +210,9 @@ namespace Buyalot.Controllers
                 }
                 
                 Session["Cart"] = cart;
+                ViewData["CartCount"] = cart.Count;
             }
-
+           
             return View("AddToCart");
         }
 
@@ -242,6 +239,7 @@ namespace Buyalot.Controllers
             {
                 cart[i].Quantity = Convert.ToInt32(quantities[i]);
                 Session["Cart"] = cart;
+                ViewData["CartCount"] = cart.Count;
             }
 
 
@@ -258,6 +256,7 @@ namespace Buyalot.Controllers
             for (int i = 0; i < counter; i++)
                 cart[i].Quantity++;
             Session["Cart"] = cart;
+            ViewData["CartCount"] = cart.Count;
 
             return View("AddToCart");
         }

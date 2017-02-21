@@ -37,7 +37,7 @@ namespace Buyalot.Controllers
         //    //ViewBag.ProductList = Context.ProductModelSet.ToList();
         //    return View();
         //}
-
+      
         public ActionResult Index(string searchString)
         {
             var db = new DataContext();
@@ -54,6 +54,8 @@ namespace Buyalot.Controllers
                                        || s.vendor.Contains(searchString));
 
             }
+            
+            ViewBag.ProductList = db.ProductModelSet.ToList();
             return View(product);
 
         }

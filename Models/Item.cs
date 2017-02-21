@@ -26,6 +26,18 @@ namespace Buyalot.Models
                 quantity = value;
             }
         }
+        public int Quantity1
+        {
+            get
+            {
+                return quantity;
+            }
+
+            set
+            {
+                quantity = value;
+            }
+        }
 
         public ProductModel Prdcts
         {
@@ -46,6 +58,7 @@ namespace Buyalot.Models
         {
             this.Prdcts = product;
             this.Quantity = quantity;
+            this.Quantity1 = quantity;
         }
     }
 }

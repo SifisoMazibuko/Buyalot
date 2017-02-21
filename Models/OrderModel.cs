@@ -28,6 +28,6 @@ namespace Buyalot.Models
        
 
         public virtual ICollection<OrderDetailsModel> OrderDetails { get; set; }
-        public virtual ICollection<PaymentModel> Payments { get; set; }
+        //public virtual ICollection<PaymentModel> Payments { get; set; }
     }
 }

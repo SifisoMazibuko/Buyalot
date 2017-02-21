@@ -1,54 +1,74 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "Category";
 }
-
-<h2>Category</h2>
-<div class="crumb_nav"> <a href="@Url.Action("Index", "Home")">Home</a> &gt;&gt; @ViewBag.category.categoryName </div>
-<br />
-<div class="new_products">
-    @foreach (var product in ViewBag.products)
-    {
-    <div class="new_prod_box">
-        <a href="@Url.Action("Details", "Products", new { id = product.productID })">@product.productName</a>
-
-        @{
-
-            var base64 = Convert.ToBase64String(product.productImage);
-            var prodImage = string.Format("data:image/png;base64,{0}", base64);
-            var quantity1 = product.quantityInStock;
-            var check1 = "";
-
-            var price1 = product.price.ToString();
-
-            var R = "R";
-            var price = R + "" + price1.ToString();
-
-
-        }
-        @*<img src="@prodImage" style="max-height:100px;max-width:100px;" />*@
-        <div class="new_prod_bg">
-            <a href="#">
-                <img src="@prodImage" alt="@product.productName" class="thumb" border="0" />
-            </a>
-            <p><b>@product.vendor + " " + @product.productName</b></p>
-            <p><b>@price</b></p>
-
-            @if (quantity1 > 0)
-                {
-                    check1 = "In Stock";
-                <p style="color:green">@check1</p>
-            }
-            else
+<!DOCTYPE html>
+<html>
+<head>
+    <title>@ViewBag.Title</title>
+<style type="text/css">
+    #myImg {
+        border-radius: 5px;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+</style>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            @foreach (var product in ViewBag.products)
             {
-                check1 = "Out Of Stock";
-                <p style="color:red">@check1</p>
+                <div class="new_prod_box">
+                    <a href="@Url.Action("Details", "Products", new { id = product.productID })">@product.productName</a>
 
-            }
+                    @{
+
+                        var base64 = Convert.ToBase64String(product.productImage);
+                        var prodImage = string.Format("data:image/png;base64,{0}", base64);
+                        var quantity1 = product.quantityInStock;
+                        var prodID = product.productID;
+                        var check1 = "";
+
+                        var price1 = product.price.ToString();
+
+                        var R = "R";
+                        var price = R + "" + price1.ToString();
+
+
+                    }
+                    @*<img src="@prodImage" style="max-height:100px;max-width:100px;" />*@
+                    <div class="new_prod_bg">
+                        <a href="@Url.Action("Details", "Products", new { id = product.productID })">
+                            <div class="img-wrapper">
+                                <img src="@prodImage" style="max-height:200px;max-width:200px;" class="img-responsive" id="myImg" />
+                            </div>
+                        </a>
+                        <p><b>@product.vendor</b></p>
+                        <p><b>@product.productName</b></p>
+                        <p><b>@price</b></p>
+
+                        @if (quantity1 > 0)
+                        {
+                            check1 = "Available";
+                            <p style="color:green"><b>@check1</b></p>
+                        }
+                        else
+                        {
+
+                            check1 = "Out Of Stock";
+                            <p style="color:red"><b>@check1</b></p>
+
+                        }
+                        <p>@Html.ActionLink("AddToCart", "AddToCart", "Products", new { id = prodID }, new { @class = "btn btn-success glyphicon glyphicon-shopping-cart" })</p>
+                        <p>@Html.ActionLink("AddToWishList", "AddToWishlist", "ProductsWishlist", new { id = prodID }, new { @class = "btn btn-warning glyphicon glyphicon-heart" })</p>
+
+                    </div>
+                </div>
+                        }
+
         </div>
     </div>
-    }
-</div>
-
+</body>
+</html>
 
 

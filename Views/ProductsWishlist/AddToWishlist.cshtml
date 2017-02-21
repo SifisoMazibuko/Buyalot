@@ -1,20 +1,13 @@
 ﻿@using Buyalot.Models
+@model IEnumerable<Buyalot.Models.ProductModel>
 @{
-    ViewBag.Title = "AddToCart";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@*<h2>AddToCart</h2>*@
-
-<!-- Bootstrap -->
-<link href="./Content/bootstrap-theme.css" rel="stylesheet" />
-<link href="./Content/bootstrap.min.css" rel="stylesheet" />
-<link href="./Content/stylesheet.css" rel="stylesheet" />
-
-<link href="~/Content/dataTables.bootstrap.css" rel="stylesheet" />
-@using (Html.BeginForm("UpdateQuantity", "Products", FormMethod.Post))
+@using (Html.BeginForm("UpdateQuantity1", "ProductsWishlist", FormMethod.Post))
 {
     <div class="container">
-        <h3 style="border-bottom:solid 2px; border-bottom-color:dodgerblue" class="glyphicon glyphicon-shopping-cart">Products Added To Cart</h3>
+        <h3 style="border-bottom:solid 2px; border-bottom-color:dodgerblue" class="glyphicon glyphicon-heart-empty"> Your WishList</h3>
         <br />
         @{
             decimal sum = 0;
@@ -28,43 +21,47 @@
                     <th>Vendor</th>
                     <th>Name</th>
                     <th>Price</th>
-                    <th>Quantity<input type="submit" class="btn-primary" value="Update"/></th>
+                    @*<th>Quantity<input type="submit" class="btn-primary" value="Update" /></th>*@
                     <th>Total Price</th>
                     <th></th>
                 </tr>
             </thead>
 
             <tbody>
+               
                 @foreach (Item p in (List<Item>)Session["Cart"])
                 {
-
+                    
                     <tr>
                         @{
 
-                            //var price = String.Format("{0:0.00}", p.Prdcts.price);
+                 
                             var base64 = Convert.ToBase64String(p.Prdcts.productImage);
                             var prodImage = string.Format("data:image/png;base64,{0}", base64);
-
-                           
-                            sum = sum + (p.Prdcts.price * p.Quantity);
-                            cartCount = cartCount + p.Quantity;
-                            Session["cartCounter"] = cartCount;
+                    
+                            sum = sum + (p.Prdcts.price * p.Quantity1);
+                            cartCount = cartCount + p.Quantity1;
+                            Session["wishCounter"] = cartCount;
                         }
 
                         <td>@p.Prdcts.vendor</td>
                         <td>@p.Prdcts.productName</td>
                         <td>R @String.Format("{0:0.00}", p.Prdcts.price)</td>
-                        <td><input type="text" name="txtQuantity" id="txtQuantity" style="max-width:70px" value="@p.Quantity" /></td>
-                        <td>R @String.Format("{0:0.00}", (p.Prdcts.price * p.Quantity))</td>
+                        @*<td><input type="text" name="txtQuantity" id="txtQuantity" style="max-width:70px" value="@p.Quantity" /></td>*@
+                        <td>R @String.Format("{0:0.00}", (p.Prdcts.price * p.Quantity1))</td>
                         <td>
                             @Html.ActionLink("Delete", "DeleteCart", "Products", new { id = p.Prdcts.productID },
                         new { @class = "btn btn-danger glyphicon glyphicon-trash", onclick = "return confirm('Are you sure you wish to delete Item(s)?');" })
                             @*/*  new { onclick = "return confirm('Are you sure you wish to delete?');" })*/*@
                         </td>
+
+                        <td>
+                            @Html.ActionLink("Add To Cart", "AddToCart", "Products", new { id = p.Prdcts.productID }, new { @class = "btn btn-success pull-right glyphicon glyphicon-shopping-cart" })
+                        </td>
                         @*<td><button id="minus" class="btn glyphicon glyphicon-minus-sign"></button> <button id="plus" class="btn glyphicon glyphicon-plus-sign"></button></td>*@
                     </tr>
 
-                            }
+                }
 
             </tbody>
             <tfoot>
@@ -76,20 +73,20 @@
                     <th>Sum</th>
                     <th><p>@r @String.Format("{0:0.00}", sum)</p></th>
                     <th></th>
+                    <th></th>
                 </tr>
             </tfoot>
         </table>
         <br />
-        @Html.ActionLink("Continue Shopping", "Index", "Products", new { @class = "btn btn-warning" })
-        @Html.ActionLink("Proceed To CheckOut", "Payment", "Checkout", new { @class = "btn btn-success pull-right" })
+        @Html.ActionLink("Continue Shopping", "Index", "ProductsWishlist", new { @class = "btn btn-warning" })
+       
+        @*@Html.ActionLink("Add To Cart", "AddToCart", "Checkout", new { @class = "btn btn-success pull-right" })*@
     </div>
-                            }
+}
 <script src="~/Scripts/jquery.js"></script>
 <script src="~/Scripts/bootstrap.min.js"></script>
 <script src="~/Scripts/jquery.dataTables.min.js"></script>
 <script src="~/Scripts/dataTables.bootstrap.min.js"></script>
-@*<script src="~/Scripts/dataTables.foundation.min.js"></script>
-    <script src="~/Scripts/dataTables.jqueryui.min.js"></script>*@
 
 
 <script>
@@ -102,4 +99,3 @@
             "iDisplayLength": 5
         });
 </script>
-

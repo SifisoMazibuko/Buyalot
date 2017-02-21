@@ -136,22 +136,18 @@ namespace Buyalot.Migrations
                     {
                         paymentID = c.Int(nullable: false, identity: true),
                         customerID = c.Int(nullable: false),
-                        orderID = c.Int(nullable: false),
                         paymentDate = c.DateTime(nullable: false),
                         paymentType = c.String(),
                         totalPrice = c.Decimal(nullable: false, precision: 18, scale: 2),
                     })
                 .PrimaryKey(t => t.paymentID)
                 .ForeignKey("dbo.Customer", t => t.customerID, cascadeDelete: true)
-                //.ForeignKey("dbo.Order", t => t.orderID, cascadeDelete: true)
-                .Index(t => t.customerID)
-                .Index(t => t.orderID);
+                .Index(t => t.customerID);
             
         }
         
         public override void Down()
         {
-            DropForeignKey("dbo.Payment", "orderID", "dbo.Order");
             DropForeignKey("dbo.Payment", "customerID", "dbo.Customer");
             DropForeignKey("dbo.Product", "ProductCategory_prodCategoryID", "dbo.ProductCategory");
             DropForeignKey("dbo.OrderDetails", "productID", "dbo.Product");
@@ -162,7 +158,6 @@ namespace Buyalot.Migrations
             DropForeignKey("dbo.Order", "customerID", "dbo.Customer");
             DropForeignKey("dbo.Billing", "customerID", "dbo.Customer");
             DropForeignKey("dbo.Address", "customerID", "dbo.Customer");
-            DropIndex("dbo.Payment", new[] { "orderID" });
             DropIndex("dbo.Payment", new[] { "customerID" });
             DropIndex("dbo.ProductCategory", new[] { "ProductModel_productID" });
             DropIndex("dbo.ProductCategory", new[] { "adminID" });

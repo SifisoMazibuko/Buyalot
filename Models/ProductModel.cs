@@ -14,12 +14,13 @@ namespace Buyalot.Models
     public class ProductModel
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int productID { get; set; }
 
-       
-        ////public int prodCategoryID { get; set; }
-        ////[ForeignKey("prodCategoryID")]
-        ////public virtual ProductCategoryModel prodCategory { get; set; }
+        
+        //public int prodCategoryID { get; set; }
+        //[ForeignKey("prodCategoryID")]
+        //public virtual ProductCategoryModel prodCategory { get; set; }
 
         [Required]
         [Display(Name = "Product Name:")]
