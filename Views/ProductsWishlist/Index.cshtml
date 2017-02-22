@@ -91,8 +91,18 @@
 
     /* 100% Image Width on Smaller Screens */
 </style>
+<div class="container">
+
+    @using (Html.BeginForm())
+            {
+        <Div class="nav form-inline">
+            <input type="search" class="form-control" name="SearchString" style="max-width:1000px;" id="SearchString" onkeyup="myFunction()" placeholder="search for product" />
+            <button class="btn btn-primary" type="submit"><span class="glyphicon glyphicon-search"></span> Search </button>
+        </Div>
+    }
+</div>
 <br />
-<h3 style="border-bottom:solid 2px; border-bottom-color:dodgerblue">List Of Products</h3>
+<h3 style="border-bottom:solid 2px; border-bottom-color:dodgerblue">New Released Products</h3>
 <br />
 <div class="container" id="myTable">
 

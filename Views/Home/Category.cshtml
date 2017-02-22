@@ -1,74 +1,116 @@
-﻿@{
-    ViewBag.Title = "Category";
+﻿@model IEnumerable<Buyalot.Models.ProductModel>
+
+@{
+    ViewBag.Title = "Home Page";
 }
-<!DOCTYPE html>
-<html>
-<head>
-    <title>@ViewBag.Title</title>
+
+
 <style type="text/css">
-    #myImg {
-        border-radius: 5px;
-        cursor: pointer;
-        transition: 0.3s;
-    }
+#myImg {
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+#myImg:hover {opacity: 0.7;}
+
 </style>
-</head>
-<body>
-    <div class="container">
-        <div class="row">
-            @foreach (var product in ViewBag.products)
+<div class="container">
+
+    @using (Html.BeginForm())
             {
-                <div class="new_prod_box">
-                    <a href="@Url.Action("Details", "Products", new { id = product.productID })">@product.productName</a>
+        <Div class="nav form-inline">
+            <input type="search" class="form-control" name="SearchString" style="max-width:1000px;" id="SearchString" onkeyup="myFunction()" placeholder="search for product" />
+            <button class="btn btn-primary" type="submit"><span class="glyphicon glyphicon-search"></span> Search </button>
+        </Div>
+    }
+</div>
 
-                    @{
-
-                        var base64 = Convert.ToBase64String(product.productImage);
-                        var prodImage = string.Format("data:image/png;base64,{0}", base64);
-                        var quantity1 = product.quantityInStock;
-                        var prodID = product.productID;
-                        var check1 = "";
-
-                        var price1 = product.price.ToString();
-
-                        var R = "R";
-                        var price = R + "" + price1.ToString();
+<br />
+<h3 style="border-bottom:solid 2px; border-bottom-color:dodgerblue">New Released Products</h3>
+<br />
+<div class="container" id="myTable">
+    @{
+        var column_count = 0;
+    }
 
 
-                    }
-                    @*<img src="@prodImage" style="max-height:100px;max-width:100px;" />*@
-                    <div class="new_prod_bg">
-                        <a href="@Url.Action("Details", "Products", new { id = product.productID })">
-                            <div class="img-wrapper">
-                                <img src="@prodImage" style="max-height:200px;max-width:200px;" class="img-responsive" id="myImg" />
-                            </div>
-                        </a>
-                        <p><b>@product.vendor</b></p>
-                        <p><b>@product.productName</b></p>
-                        <p><b>@price</b></p>
+    @foreach (var product in ViewBag.products)
+    {
+        column_count++;
+        <div style="display:inline-block">
+            @{
+                var base64 = Convert.ToBase64String(product.productImage);
+                var prodImage = string.Format("data:image/png;base64,{0}", base64);
+                var prodID = product.productID;
+                var name1 = product.vendor + " " + product.productName;
+                //var price1 = product.price.ToString();
+                var quantity1 = product.quantityInStock;
+                var check1 = "";
 
-                        @if (quantity1 > 0)
-                        {
-                            check1 = "Available";
-                            <p style="color:green"><b>@check1</b></p>
-                        }
-                        else
-                        {
+            }
 
-                            check1 = "Out Of Stock";
-                            <p style="color:red"><b>@check1</b></p>
+            @*<div class="img-wrapper">
+                    <img src="@prodImage" style="max-height:200px;max-width:200px;" class="img-responsive" id="myImg" />
+                </div>*@
 
-                        }
-                        <p>@Html.ActionLink("AddToCart", "AddToCart", "Products", new { id = prodID }, new { @class = "btn btn-success glyphicon glyphicon-shopping-cart" })</p>
-                        <p>@Html.ActionLink("AddToWishList", "AddToWishlist", "ProductsWishlist", new { id = prodID }, new { @class = "btn btn-warning glyphicon glyphicon-heart" })</p>
-
-                    </div>
+            <a href="@Url.Action("Details", "Products", new { id = product.productID })">
+                <div class="img-wrapper">
+                    <img src="@prodImage" id="myImg" style="max-height:200px;max-width:200px;" class="img-responsive"/>
                 </div>
-                        }
+            </a>
+
+
+            <p>@name1</p>
+            <p>R @String.Format(String.Format("{0:0.00}", product.price))</p>
+            @if (quantity1 > 0)
+            {
+                check1 = "Available";
+                <p style="color:green"><b>@check1</b></p>
+
+            }
+            else
+            {
+                check1 = "Out Of Stock";
+                <p style="color:red"><b>@check1</b></p>
+            }
+            
+            <p>@Html.ActionLink("AddToCart", "AddToCart", "Products", new { id = prodID }, new { @class = "btn btn-success glyphicon glyphicon-shopping-cart" })</p>
+            <p>@Html.ActionLink("AddToWishList", "AddToWishlist", "ProductsWishlist", new { id = prodID }, new { @class = "btn btn-danger glyphicon glyphicon-heart-empty" })</p>
+      
+
 
         </div>
-    </div>
-</body>
-</html>
+                }
+</div>
+
+
+<script type="text/javascript">
+
+                function myFunction() {
+                    // Declare variables
+                    var input, filter, div, tr, td, i;
+                    input = document.getElementById("myInput");
+                    filter = input.value.toUpperCase();
+                    div = document.getElementById("myTable");
+                    tr = table.getElementsByTagName("tr");
+
+                    // Loop through all table rows, and hide those who don't match the search query
+                    for (i = 0; i < tr.length; i++) {
+                        td = tr[i].getElementsByTagName("td")[0];
+                        if (td) {
+                            if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                                tr[i].style.display = "";
+                            } else {
+                                tr[i].style.display = "none";
+                            }
+                        }
+                    }
+                }
+
+</script>
+
+
+            
+
 
 

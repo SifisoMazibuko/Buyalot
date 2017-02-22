@@ -3,7 +3,12 @@
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<!-- Bootstrap -->
+<link href="./Content/bootstrap-theme.css" rel="stylesheet" />
+<link href="./Content/bootstrap.min.css" rel="stylesheet" />
+<link href="./Content/stylesheet.css" rel="stylesheet" />
 
+<link href="~/Content/dataTables.bootstrap.css" rel="stylesheet" />
 @using (Html.BeginForm("UpdateQuantity1", "ProductsWishlist", FormMethod.Post))
 {
     <div class="container">
@@ -78,7 +83,7 @@
             </tfoot>
         </table>
         <br />
-        @Html.ActionLink("Continue Shopping", "Index", "ProductsWishlist", new { @class = "btn btn-warning" })
+        @Html.ActionLink("Continue Shopping", "Index", "Productshlist", new { @class = "btn btn-warning" })
        
         @*@Html.ActionLink("Add To Cart", "AddToCart", "Checkout", new { @class = "btn btn-success pull-right" })*@
     </div>
@@ -90,7 +95,6 @@
 
 
 <script>
-		//$("#myTable").DataTable();
         $("#myTable").dataTable({
             "aoColumnDefs": [
                { 'bSortable': false, 'aTargets': [2, 3, 4, 5] }

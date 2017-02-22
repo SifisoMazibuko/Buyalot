@@ -12,6 +12,10 @@ AngularApp.config(
              templateUrl: "app/Views/Account/Login.html",
              controller: "LoginController"
          })
+        .when("/forgotPassword", {
+            templateUrl: "app/Views/Account/ForgotPassword.html",
+            controller: "HomeController"
+        })
          .when("/register", {
              templateUrl: "app/Views/Account/Register.html",
              controller: "RegisterController"

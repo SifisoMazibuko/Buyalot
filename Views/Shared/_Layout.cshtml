@@ -24,48 +24,53 @@
         ul {
             padding: 0;
             list-style: none;
-            background: #f2f2f2;            
+            background: #f2f2f2;
         }
 
-        ul li {
-            display: inline-block;
-            position: relative;
-            line-height: 21px;
-            text-align: left;
-        }
-        ul li a {
-           display: block;
-           padding: 8px 25px;
-           color: #333;
-           text-decoration: none;
-         }
-        ul li a:hover {
-           color: #fff;
-           background: #939393;
-        }
-        ul li ul.dropdown {
-           min-width: 100%; 
-           background: #f2f2f2;
-           display: none;
-           position: absolute;
-           z-index: 999;
-           left: 0;
-         }
-        ul li:hover ul.dropdown {
-           display: block; 
-        }
-        ul li ul.dropdown li {
-           display: block;
-         }
+            ul li {
+                display: inline-block;
+                position: relative;
+                line-height: 21px;
+                text-align: left;
+            }
+
+                ul li a {
+                    display: block;
+                    padding: 8px 25px;
+                    color: #333;
+                    text-decoration: none;
+                }
+
+                    ul li a:hover {
+                        color: #fff;
+                        background: #939393;
+                    }
+
+                ul li ul.dropdown {
+                    min-width: 100%;
+                    background: #f2f2f2;
+                    display: none;
+                    position: absolute;
+                    z-index: 999;
+                    left: 0;
+                }
+
+                ul li:hover ul.dropdown {
+                    display: block;
+                }
+
+                ul li ul.dropdown li {
+                    display: block;
+                }
     </style>
     <script type="text/javascript">
-        var appInsights=window.appInsights||function(config){
-            function r(config){t[config]=function(){var i=arguments;t.queue.push(function(){t[config].apply(t,i)})}}var t={config:config},u=document,e=window,o="script",s=u.createElement(o),i,f;for(s.src=config.url||"//az416426.vo.msecnd.net/scripts/a/ai.0.js",u.getElementsByTagName(o)[0].parentNode.appendChild(s),t.cookie=u.cookie,t.queue=[],i=["Event","Exception","Metric","PageView","Trace","Ajax"];i.length;)r("track"+i.pop());return r("setAuthenticatedUserContext"),r("clearAuthenticatedUserContext"),config.disableExceptionTracking||(i="onerror",r("_"+i),f=e[i],e[i]=function(config,r,u,e,o){var s=f&&f(config,r,u,e,o);return s!==!0&&t["_"+i](config,r,u,e,o),s}),t
+        var appInsights = window.appInsights || function (config) {
+            function r(config) { t[config] = function () { var i = arguments; t.queue.push(function () { t[config].apply(t, i) }) } } var t = { config: config }, u = document, e = window, o = "script", s = u.createElement(o), i, f; for (s.src = config.url || "//az416426.vo.msecnd.net/scripts/a/ai.0.js", u.getElementsByTagName(o)[0].parentNode.appendChild(s), t.cookie = u.cookie, t.queue = [], i = ["Event", "Exception", "Metric", "PageView", "Trace", "Ajax"]; i.length;) r("track" + i.pop()); return r("setAuthenticatedUserContext"), r("clearAuthenticatedUserContext"), config.disableExceptionTracking || (i = "onerror", r("_" + i), f = e[i], e[i] = function (config, r, u, e, o) { var s = f && f(config, r, u, e, o); return s !== !0 && t["_" + i](config, r, u, e, o), s }), t
         }({
-            instrumentationKey:"c34a802c-45b6-4cc2-8469-3bd06bd4d238"
+            instrumentationKey: "c34a802c-45b6-4cc2-8469-3bd06bd4d238"
         });
 
-        window.appInsights=appInsights;
+        window.appInsights = appInsights;
         appInsights.trackPageView();
     </script>
 </head>
@@ -79,23 +84,28 @@
                     <span class="icon-bar"></span>
                 </button>
                 @*@Html.ActionLink(".", "Index", "Home", new { area = "" }, new { @class = "logo" })*@
-                <img href="/#/home" class="logo"  />
+                <img href="/#/home" class="logo" />
             </div>
             <div class="navbar-collapse collapse" collapse="navbarProperties.isCollapsed">
-                 <ul class="nav navbar-nav navbar-right">
+                <ul class="nav navbar-nav navbar-right">
                     @if (Session["cusName"] != null)
                     {
-                        <li><a>Welcome @Session["cusName"] </a></li>
+                        <li>
+                            <a>Welcome @Session["cusName"] </a>
+                        </li>
+                    }
+                    else
+                    {
+                        <li> <a href="/#/login">Login</a></li>
+                        <li><a href="/#/register">Register</a></li>
                     }
                     @*<li>@{Html.RenderAction("AddToCart", "Products");}</li>*@
-                    
-                    <li><a href="/#/login">Login</a></li>
-                    <li><a href="/#/register">Register</a></li>
-                    @*<li>@Html.ActionLink(" " + ViewData["CartCount"] + "", "AddToCart", "Products", new { @class = "glyphicon glyphicon-shopping-cart"})</li> 
-                    <li>@Html.ActionLink(" " + ViewData["CartWishCount"] + "", "AddToWishlist", "ProductsWishlist", new { @class = "glyphicon glyphicon-heart" })</li>*@ 
 
-                     <li>@Html.ActionLink(" " + Convert.ToInt32(Session["cartCounter"]) + "", "AddToCart", "Products", new { @class = "glyphicon glyphicon-shopping-cart" })</li>
-                     <li>@Html.ActionLink(" " + Convert.ToInt32(Session["wishCounter"]) + "", "AddToWishlist", "ProductsWishlist", new { @class = "glyphicon glyphicon-heart" })</li>
+                    @*<li>@Html.ActionLink(" " + ViewData["CartCount"] + "", "AddToCart", "Products", new { @class = "glyphicon glyphicon-shopping-cart"})</li>
+                        <li>@Html.ActionLink(" " + ViewData["CartWishCount"] + "", "AddToWishlist", "ProductsWishlist", new { @class = "glyphicon glyphicon-heart" })</li>*@
+
+                    <li>@Html.ActionLink(" " + Convert.ToInt32(Session["cartCounter"]) + "", "AddToCart", "Products", new { @class = "glyphicon glyphicon-shopping-cart" })</li>
+                    <li>@Html.ActionLink(" " + Convert.ToInt32(Session["wishCounter"]) + "", "AddToWishlist", "ProductsWishlist", new { @class = "glyphicon glyphicon-heart" })</li>
                     @if (Session["cusName"] != null)
                     {
                         <li class="dropdown" dropdown="">
@@ -103,20 +113,27 @@
                                 <span>My Account</span><b class="caret"></b>
                             </a>
                             <ul class="dropdown-menu" role="menu">
-                                <li><a href="/#/trackOrder">Track Order</a></li>
-                                <li><a href="/#/profile">Profile</a></li>
+                                <li>
+                                    <a href="/#/trackOrder">Track Order</a>
+                                </li>
+                                <li>
+                                    <a href="/#/profile">Profile</a>
+                                </li>
 
                             </ul>
                         </li>
-                        <li><a href="#" ng-click="logout()">Logout</a></li>
+                        <li>
+                            <a href="#" ng-click="logout()">Logout</a>
+                        </li>
 
                     }
                 </ul>
             </div>
         </div>
     </div>
-    
-    
+
+    @*@Html.Partial("Index")*@
+
 
     <div class="navbar-collapse collapse" collapse="navbarProperties.isCollapsed">
 
@@ -130,31 +147,22 @@
 
                     @foreach (var category in iCategoryRepository.findAll())
                     {
-                        <li><a href="@Url.Action("Category", "Home", new { id = category.prodCategoryID })">@category.categoryName</a></li>
+                        <li>
+                            <a href="@Url.Action("Category", "Home", new { id = category.prodCategoryID })">@category.categoryName</a>
+                        </li>
                     }
 
                 </ul>
             </li>
         </ul>
-      </div>
+    </div>
 
-    <div class="container">
+   
 
-            @using (Html.BeginForm())
-            {
-                <Div class="nav form-inline">
-                    <input type="search" class="form-control" name="SearchString" style="max-width:1000px;" id="SearchString" onkeyup="myFunction()" placeholder="search for product" />
-                    @*<span type="submit" class="glyphicon glyphicon-search" />*@
-                    <button class="btn btn-primary" type="submit" ><span class="glyphicon glyphicon-search"></span> Search </button>
 
-                </Div>
-            }
-    </div>   
-    
-
-    <div class="container mainContent">
+    <div class="container mainContent" ng-app="AngularApp">
         <br />
-        <div ng-view>
+        <div ng-view>            
         </div>
     </div>
 

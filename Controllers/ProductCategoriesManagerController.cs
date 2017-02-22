@@ -33,8 +33,23 @@ namespace Buyalot.Controllers
 
         }
         // GET: ProductCategories
-        public ActionResult Index()
+        public ActionResult Index(string searchString)
         {
+            var db = new DataContext();
+
+            var product = (from p in db.ProductModelSet
+                           select p);
+
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                product = product.Where(s => s.productName.StartsWith(searchString)
+                                       || s.productName.Contains(searchString)
+                                       || s.vendor.StartsWith(searchString)
+                                       || s.vendor.Contains(searchString));
+
+            }
+
             return View(Context.ProductCategoryModelSet.ToList());
         }
 

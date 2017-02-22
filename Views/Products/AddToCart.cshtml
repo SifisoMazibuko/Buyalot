@@ -3,8 +3,6 @@
     ViewBag.Title = "AddToCart";
 }
 
-@*<h2>AddToCart</h2>*@
-
 <!-- Bootstrap -->
 <link href="./Content/bootstrap-theme.css" rel="stylesheet" />
 <link href="./Content/bootstrap.min.css" rel="stylesheet" />
@@ -29,7 +27,7 @@
                     <th>Name</th>
                     <th>Price</th>
                     <th>Quantity<input type="submit" class="btn-primary" value="Update"/></th>
-                    <th>Total Price</th>
+                    <th>SubTotal</th>
                     <th></th>
                 </tr>
             </thead>
@@ -73,7 +71,7 @@
                     <th></th>
                     <th></th>
                     <th></th>
-                    <th>Sum</th>
+                    <th>Total Price</th>
                     <th><p>@r @String.Format("{0:0.00}", sum)</p></th>
                     <th></th>
                 </tr>
@@ -82,18 +80,16 @@
         <br />
         @Html.ActionLink("Continue Shopping", "Index", "Products", new { @class = "btn btn-warning" })
         @Html.ActionLink("Proceed To CheckOut", "Payment", "Checkout", new { @class = "btn btn-success pull-right" })
+
     </div>
                             }
 <script src="~/Scripts/jquery.js"></script>
 <script src="~/Scripts/bootstrap.min.js"></script>
 <script src="~/Scripts/jquery.dataTables.min.js"></script>
 <script src="~/Scripts/dataTables.bootstrap.min.js"></script>
-@*<script src="~/Scripts/dataTables.foundation.min.js"></script>
-    <script src="~/Scripts/dataTables.jqueryui.min.js"></script>*@
 
 
 <script>
-		//$("#myTable").DataTable();
         $("#myTable").dataTable({
             "aoColumnDefs": [
                { 'bSortable': false, 'aTargets': [2, 3, 4, 5] }
