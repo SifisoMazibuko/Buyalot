@@ -20,7 +20,7 @@
         $scope.profileModel.customerID = $routeParams.customerID;
 
         if ($scope.profileModel.customerID > 0) {
-            ProductService.GetProfile($scope.profileModel.customerID).then(
+            ProductService.profileGet($scope.profileModel.customerID).then(
                 function (result) {
 
                     $scope.profileModel.customerID = result.data.customerID;
@@ -49,7 +49,9 @@
             if ($scope.profileForm.$invalid)
                 return;
 
-            var result = AccountService.GetProfile($scope.profileModel.firstName,
+            if ($scope.profileForm.$valid) {
+
+                AccountService.profile($scope.profileModel.firstName,
                                                   $scope.profileModel.lastName,
                                                   $scope.profileModel.phone,
                                                   $scope.profileModel.email,
@@ -57,17 +59,40 @@
                                                   $scope.profileModel.confirmPassword,
                                                   $scope.profileModel.address,
                                                   $scope.profileModel.city,
-                                                  $scope.profileModel.postalCode
+                                                  $scope.profileModel.postalCode).then(
 
-                 );
+                    function (result) {
+                        $location.path('/profile');
+                        $scope.handleSuccess = true;
+                        $scope.successMessage = "Successfully Update!";
+                        var txt = $scope.successMessage;
+                        alert(txt);
+                    },
 
-            result.then(function (result) {
-                $window.history.back();
+                    function (error) {
+                        $scope.hasError = true;
+                        $scope.errorMessage = error.statusText;
+                    }
+                );
+            }
 
-            },
-             function (error) {
-                 handleError(error);
-             });
         }
+
+        $scope.profileForm = function () {
+            $location.path('/Profile');
+        };
+        //$scope.profile = function () {
+        //    $location.path('/profile');
+        //};
+
+        $scope.profile = function () {
+            $location.path("/GetProfile/0");
+        };
+
+        $scope.resetForm = function () {
+            $scope.$broadcast('show-errors-reset');
+        };
+
+
     }
 ]);

@@ -15,6 +15,8 @@ using Buyalot.Provider;
 using System.Web.Security;
 using AftaScool.BL.Util;
 using System.Data.Entity;
+using WebMatrix.WebData;
+using System.Net.Mail;
 
 namespace Buyalot.Controllers
 {
@@ -63,8 +65,19 @@ namespace Buyalot.Controllers
 
                 if (model.isValid(model.email, Cipher.Encrypt(model.password)))
                 {
+                    var cust = (from c in Context.CustomerModelSet
+                               where c.email == model.email// && c.firstName == model.firstName
+                               select c).ToList();
+      
+                    foreach (var item in cust)
+                    {
+                        Session["userID"] = item.customerID;
+                        Session["cusName"] = item.firstName;
+                    }
                     FormsAuthentication.SetAuthCookie(model.email, false);
-                    Session["cusName"] = model.email;
+                                                    
+                    //Session["cusName"] = model.email;
+
                     return RedirectToAction("Index", "Home");
                 }
                 else
@@ -144,34 +157,48 @@ namespace Buyalot.Controllers
             return View(user1);
         }
 
+        [HttpGet]
+        [AllowAnonymous]
+        public ActionResult ForgotPassword()
+        {
+            return View();
+        }
 
         [HttpPost]
         [AllowAnonymous]
-        public ActionResult AdminLogin(AdminModel model)
-        {
+        public ActionResult ForgotPassword(CustomerModel model)
+        {        
 
-            var errors = ModelState
-                    .Where(x => x.Value.Errors.Count > 0)
-                    .Select(x => new { x.Key, x.Value.Errors })
-                     .ToArray();
+            string tmpPass = Membership.GeneratePassword(10, 4);
+            var getPass = (from p in Context.CustomerModelSet
+                           where p.email == model.email
+                           select p).ToList();
 
-            try
+            string tempPassword = "";
+            foreach(var p in getPass)
             {
-                if (model.isValid(model.adminName, model.email, model.password))
-                {
-                    FormsAuthentication.SetAuthCookie(model.email, false);
-                    return RedirectToAction("Index", "Home");
-                }
-                else
-                    return new HttpStatusCodeResult(HttpStatusCode.InternalServerError, "Incorrect details");
-
+                tempPassword = Cipher.Decrypt(p.password);
             }
-            catch (LoginException e)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.InternalServerError, e.Message); ;
-            }
+            MailMessage message = new MailMessage();
+            message.From = new System.Net.Mail.MailAddress("mazibujo19@gmail.com");
+            message.To.Add(new System.Net.Mail.MailAddress(model.email));
+            message.Subject = "Password Recovery";
+            message.Body = string.Format("Hi ,<br /><br />Your password is: {0} .<br /><br />Thank You. <br /> Regards, <br /> Buyalot DevTeam", tempPassword);
+            message.IsBodyHtml = true;
+            SmtpClient smtp = new SmtpClient();
+            smtp.Host = "smtp.gmail.com";
+            smtp.EnableSsl = true;
+            NetworkCredential NetworkCred = new NetworkCredential();
+            smtp.UseDefaultCredentials = true;
+            smtp.Credentials = NetworkCred;
+            smtp.Port = 587;
 
+            System.Net.Mail.SmtpClient client = new System.Net.Mail.SmtpClient();
+            client.Send(message);
+
+            return View(model);
         }
+
 
         // GET: Product
         public ActionResult Index()
@@ -188,83 +215,11 @@ namespace Buyalot.Controllers
             return View(product);
         }
 
-        // GET: /StoreManager/Create
-        public ActionResult AddProduct()
-        {
-
-            ProductModel prod = new ProductModel();
-            return View(prod);
-        }
-
-
-        //POST /AddProduct
-        [HttpPost]
-        public ActionResult AddProduct(ProductModel product, HttpPostedFileBase upload)
-        {
-
-            var errors = ModelState
-                    .Where(x => x.Value.Errors.Count > 0)
-                    .Select(x => new { x.Key, x.Value.Errors })
-                     .ToArray();
-            
-                if (!ModelState.IsValid)
-                    return new HttpStatusCodeResult(HttpStatusCode.InternalServerError, "Internal Error details");
-
-                if (ModelState.IsValid && upload != null)
-                {
-                    //product.productImage = new byte[upload.ContentLength];
-                    //upload.InputStream.Read(product.productImage, 0, upload.ContentLength);
-                    //var base64 = Convert.ToBase64String(product.productImage);
-                    //var prodImage = string.Format("data:image/png;base64,{0}", base64);
-
-                    var p = new ProductModel
-                    {
-                        productName = product.productName,
-                        productDescription = product.productDescription,
-                        price = product.price,
-                        vendor = product.vendor,
-                        quantityInStock = product.quantityInStock,
-                      //  ImageSource = product.ImageSource
-                    };
-
-
-                    //Context.ProductModelSet.Add(product);
-                    Context.ProductModelSet.Add(p);
-                    Context.SaveChanges();
-                    return RedirectToAction("Index", "Home");
-
-                }
-            return View(product);
-        }
-
-
-
-        //[HttpPost]
-        //public ActionResult GetProfile(int? id)
+        //[HttpGet]
+        //public ActionResult GetProfile()
         //{
-        //    if (id == null)
-        //        id = 0;
-        //    try
-        //    {
-        //        var p = (from a in Context.CustomerModelSet.Where(a => a.customerID == id).Select(a => new CustomerModel())
-        //                 select a).Single();
-        //        p.customerID = p.customerID;
-        //        p.firstName = p.firstName;
-        //        p.lastName = p.lastName;
-        //        p.phone = p.phone;
-        //        p.email = p.email;
-        //        p.password = p.password;
-        //        p.state = p.state;
-                
-                
-        //        return View(p);
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        return new HttpStatusCodeResult(HttpStatusCode.InternalServerError, e.Message);
-        //    }
+        //    return View();
         //}
-
         [HttpGet]
         public ActionResult GetProfile(int? id)
         {
@@ -279,7 +234,7 @@ namespace Buyalot.Controllers
                 return HttpNotFound();
             }
 
-            return View();
+            return View(cus);
         }
 
         [HttpPost]
@@ -290,12 +245,25 @@ namespace Buyalot.Controllers
             {
                 Context.Entry(cus).State = EntityState.Modified;
                 Context.SaveChanges();
-               // ViewBag.result = "Category " + productCategory.categoryName + " Updated Succesfully!";
                 return View(cus);
             }
 
             return RedirectToAction("Index");
         }
 
+        public ActionResult Logout()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult Logout(int? Id)
+        {
+            var response = new HttpStatusCodeResult(HttpStatusCode.Created);
+            FormsAuthentication.SignOut();
+            CustomerModel cus = Context.CustomerModelSet.Find(Id);
+            Session.Abandon();
+            Response.Redirect("Index");
+            return response;
+        }
     }
 }

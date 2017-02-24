@@ -20,8 +20,8 @@ namespace Buyalot.Models
         public virtual CustomerModel Customer { get; set; }
 
         public DateTime orderDate { get; set; }
-        public string shippingDate { get; set; }
-        public DateTime shippingAddress { get; set; }
+        public DateTime shippingDate { get; set; }
+        public string shippingAddress { get; set; }
         public string status { get; set; }
         public decimal totalPrice { get; set; }
 

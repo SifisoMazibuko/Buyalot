@@ -1,29 +1,28 @@
-﻿AngularApp.controller('LoginController',
-            ['$scope', '$location', '$window', 'AccountService', 
+﻿AngularApp.controller('ForgotPasswordController',
+            ['$scope', '$location', '$window', 'AccountService',
     function ($scope, $location, $window, AccountService) {
 
-        $scope.loginModel = {
+        $scope.forgotPasswordModel = {
             customerID: '',
             email: '',
-            password: '',
         };
 
 
         $scope.submitForm = function () {
             $scope.$broadcast('show-errors-check-validity');
 
-            if ($scope.loginForm.$invalid)
+            if ($scope.forgotPasswordForm.$invalid)
                 return;
 
-            if ($scope.loginForm.$valid) {
+            if ($scope.forgotPasswordForm.$valid) {
 
-                AccountService.login($scope.loginModel.email,
-                                        $scope.loginModel.password).then(
+                AccountService.forgotPassword($scope.forgotPasswordModel.email).then(
 
                     function (result) {
-                        $location.path('/home');
+                        $location.path('/forgotPassword');
                         $scope.handleSuccess = true;
-                        $scope.successMessage = "You're Successfully logged In!";
+                        $scope.successMessage = "Email will be sent to you shortly!";
+                        $scope.email = '';
                         var txt = $scope.successMessage;
                         alert(txt);
                     },
@@ -31,24 +30,23 @@
                     function (error) {
                         $scope.hasError = true;
                         $scope.errorMessage = error.statusText;
-                      
+
                     }
-                    
-                ); 
+                );
             }
 
         }
 
 
-        $scope.loginForm = function () {
-            $location.path('/login');
+        $scope.forgotPasswordForm = function () {
+            $location.path('/forgotPassword');
         };
 
         $scope.resetForm = function () {
             $scope.$broadcast('show-errors-reset');
         };
     }
-]);
+ ]);
 
 
 

@@ -7,6 +7,15 @@
                 Password: password
             });
         };
+        var logout = function () {
+            return $http.post("/Account/Logout", {
+            });
+        };
+        var forgotPassword = function (email, password) {
+            return $http.post("/Account/ForgotPassword", {
+                Email: email
+            });
+        };
         var register = function (firstName, lastName, phone, email, password, confirmPassword, address, city, postalCode, state) {
             return $http.post("/Account/Register", {
                 FirstName: firstName,
@@ -65,6 +74,8 @@
         return {
             login: login,
             register: register,
+            logout: logout,
+            forgotPassword: forgotPassword,
             addProduct: addProduct,
             adminLogin: adminLogin,
             profileGet: profileGet,

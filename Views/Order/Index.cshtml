@@ -1,0 +1,73 @@
+﻿@using Buyalot.Models;
+@model IEnumerable<Buyalot.Models.OrderModel>
+@*@model Buyalot.DbConnection.DataContext*@
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    
+}
+
+<link href="~/Content/dataTables.bootstrap.css" rel="stylesheet" />
+<link href="./Content/bootstrap-theme.css" rel="stylesheet" />
+<link href="./Content/bootstrap.min.css" rel="stylesheet" />
+<link href="./Content/stylesheet.css" rel="stylesheet" />
+
+<br />
+<div class="container">
+    <h3 style="border-bottom:solid 2px; border-bottom-color:dodgerblue">Ordered Items</h3>
+</div>
+
+<br />
+<div class="container">
+    <table class="table table-bordered table-hover table-striped" id="myTable">
+        <thead>
+            <tr>
+                <td>Customer#</td>
+                <td>Order Date</td>
+                <td>Shipping Date</td>
+                <td>Shipping Address</td>
+                <td>Status</td>
+                <td>Ordered Item</td>
+                <td>Quantity</td>
+                <td>Total Price</td>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in (List<OrderList>)ViewBag.OrderList)
+            {
+                
+                <tr>
+                                    
+                    <td>@item.customerID</td>
+                    <td>@item.orderDate</td>
+                    <td>@item.shippingDate</td>
+                    <td>@item.shippingAddress</td>
+                    <td>@item.status</td>
+                    <td>@item.productName</td>
+                    <td>@item.quantityOrdered</td>
+                    <td>@item.priceEach</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<script src="~/Scripts/jquery.js"></script>
+<script src="~/Scripts/bootstrap.min.js"></script>
+<script src="~/Scripts/jquery.dataTables.min.js"></script>
+<script src="~/Scripts/dataTables.bootstrap.min.js"></script>
+@*<script src="~/Scripts/dataTables.foundation.min.js"></script>
+    <script src="~/Scripts/dataTables.jqueryui.min.js"></script>*@
+
+
+<script>
+		//$("#myTable").DataTable();
+        $("#myTable").dataTable({
+            "aoColumnDefs": [
+               { 'bSortable': false, 'aTargets': [0, 2, 3, 4, 6, 7] }
+            ],
+            "aLengthMenu": [[5, 10, 25, -1], [5, 10, 25, "All"]],
+            "iDisplayLength": 5
+        });
+</script>

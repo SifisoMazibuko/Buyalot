@@ -68,9 +68,11 @@
                                                 $scope.registerModel.state).then(
 
                     function (result) {
-                        $location.path('/register');
+                        $location.path('/login');
                         $scope.handleSuccess = true;
                         $scope.successMessage = "Successfully Registered! Please try logging in!";
+                        var txt = $scope.successMessage;
+                        alert(txt);
                     },
 
                     function (error) {

@@ -14,6 +14,7 @@
     <div class="container">
         <h3 style="border-bottom:solid 2px; border-bottom-color:dodgerblue" class="glyphicon glyphicon-heart-empty"> Your WishList</h3>
         <br />
+        <br />
         @{
             decimal sum = 0;
             String r = "R";
@@ -63,7 +64,6 @@
                         <td>
                             @Html.ActionLink("Add To Cart", "AddToCart", "Products", new { id = p.Prdcts.productID }, new { @class = "btn btn-success pull-right glyphicon glyphicon-shopping-cart" })
                         </td>
-                        @*<td><button id="minus" class="btn glyphicon glyphicon-minus-sign"></button> <button id="plus" class="btn glyphicon glyphicon-plus-sign"></button></td>*@
                     </tr>
 
                 }

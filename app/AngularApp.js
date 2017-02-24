@@ -12,9 +12,13 @@ AngularApp.config(
              templateUrl: "app/Views/Account/Login.html",
              controller: "LoginController"
          })
+         .when('/logout', {
+             templateUrl: 'app/Views/Account/Logout.html',
+            controller: 'HomeController'
+        })
         .when("/forgotPassword", {
             templateUrl: "app/Views/Account/ForgotPassword.html",
-            controller: "HomeController"
+            controller: "ForgotPasswordController"
         })
          .when("/register", {
              templateUrl: "app/Views/Account/Register.html",
@@ -42,9 +46,12 @@ AngularApp.config(
          })
           .when("/profile", {
              templateUrl: "app/Views/Account/Profile.html",
-             controller: "RegisterController"
+             controller: "ProfileController"
          })
-
+          .when('/profile/:id', {
+              templateUrl: "app/Views/Account/Profile.html",
+              controller: "ProfileController"
+          })
 
      .otherwise({
          redirectTo: '/home'

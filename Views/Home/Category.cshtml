@@ -19,7 +19,7 @@
     @using (Html.BeginForm())
             {
         <Div class="nav form-inline">
-            <input type="search" class="form-control" name="SearchString" style="max-width:1000px;" id="SearchString" onkeyup="myFunction()" placeholder="search for product" />
+            <input type="search" class="form-control" name="SearchString" style="max-width:1000px;" id="myInput" onkeyup="myFunction()" placeholder="search for product" />
             <button class="btn btn-primary" type="submit"><span class="glyphicon glyphicon-search"></span> Search </button>
         </Div>
     }
@@ -36,6 +36,7 @@
 
     @foreach (var product in ViewBag.products)
     {
+        
         column_count++;
         <div style="display:inline-block">
             @{

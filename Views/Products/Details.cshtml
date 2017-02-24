@@ -36,7 +36,7 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.quantityInStock)
+            @Html.DisplayFor(model => model.quantityInStock)<br/>
         </dd>
 
         <dt>
@@ -55,7 +55,7 @@
                 var R = "R";
                 var price = R + "" + price1.ToString();
             }
-            <img src="@prodImage" style="max-height:100px;max-width:100px;" />
+            <img src="@prodImage" style="max-height:350px;max-width:350px;" class="col-sm-5"/><br/>
         </dd>
         <dt>
             @Html.DisplayNameFor(model => model.price)
